@@ -95,7 +95,8 @@ async function challengeQuestions(req, res, next) {
       answerC,
       solution,
       title,
-      time
+      time,
+      difficulty
     } = req.body;
     console.log('quetal');
     // Validate payload
@@ -138,7 +139,7 @@ async function challengeQuestions(req, res, next) {
     console.log('espera');
     console.log(answerA);
     await connection.query(
-      'INSERT INTO challenge_questions(image, id, title, text, answerA, answerB, answerC, answerD, solution, time, date) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+      'INSERT INTO challenge_questions(image, id, title, text, answerA, answerB, answerC, answerD, solution, time, date, difficulty) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
       [
         savedFileName,
         id,
@@ -150,7 +151,8 @@ async function challengeQuestions(req, res, next) {
         answerC,
         solution,
         time,
-        date
+        date,
+        difficulty
       ]
     );
 
@@ -176,6 +178,7 @@ async function challengeQuestions(req, res, next) {
       solution,
       time,
       image: savedFileName,
+      difficulty,
       date: date
     });
   } catch (error) {
@@ -187,13 +190,19 @@ async function challengeQuestions(req, res, next) {
 async function listChallengeQuestions(req, res, next) {
   try {
     const connection = await getConnection();
-    const { search, filter } = req.query;
+    const { search } = req.query;
     let result;
     if (search) {
       result = await connection.query(
         `SELECT * FROM challenge_questions WHERE hidden=false AND title LIKE ? AND date>CURDATE()
+         OR hidden=false AND difficulty LIKE ? AND date>CURDATE() 
         ORDER BY date ASC`,
-        [`%${search}%`]
+        [`%${search}%`, `%${search}%`]
+      );
+    } else {
+      result = await connection.query(
+        `SELECT * FROM challenge_questions WHERE hidden=false AND date>CURDATE()
+        ORDER BY date ASC`
       );
     }
     const [questions] = result;
@@ -209,18 +218,25 @@ async function listChallengeQuestions(req, res, next) {
 // GET challenge questions:id 👀
 async function challengeQuestionslist(req, res, next) {
   try {
-    console.log('hola');
     const { id } = req.params;
-    console.log(id);
     const connection = await getConnection();
 
-    const questions = await connection.query(
-      'SELECT * from challenge_questions where id=?',
+    const [result] = await connection.query(
+      `SELECT * FROM challenge_questions
+      WHERE hidden=false AND id=?`,
       [id]
     );
+    if (!result[0].id) {
+      const error = new Error(`The entry with id ${id} does not exist`);
+      error.httpCode = 404;
+      throw error;
+    }
+
+    connection.release();
+
     res.send({
       status: 'ok',
-      data: questions[0]
+      data: result[0]
     });
   } catch (error) {
     next(error);

@@ -123,7 +123,18 @@ const questionSchema = Joi.object().keys({
     ),
   time: Joi.string()
     .max(75)
-    .error(generateError('El tiempo no puede pasar de 2 caracteres', 400))
+    .error(generateError('El tiempo no puede pasar de 2 caracteres', 400)),
+  difficulty: Joi.number()
+    .min(1)
+    .max(5)
+    .integer()
+    .required()
+    .error(
+      generateError(
+        'El campo voto debe existir y ser un número entre 1 y 5',
+        400
+      )
+    )
 });
 
 const editPasswordUserSchema = Joi.object().keys({

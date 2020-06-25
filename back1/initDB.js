@@ -63,6 +63,7 @@ async function main() {
         image varchar(255) default null,
         hidden boolean default false,
         date datetime not null,
+        difficulty INTEGER NOT NULL,
         CONSTRAINT FK_entry_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
         );`);
     console.log('prueba1');
