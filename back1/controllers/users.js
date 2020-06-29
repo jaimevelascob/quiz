@@ -1,27 +1,28 @@
-require('dotenv').config();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const { getConnection } = require('../db');
+const { getConnection } = require("../db");
 
 const {
   processAndSavePhoto,
   deletePhoto,
   randomString,
   sendEmail,
-  generateError
-} = require('../helpers/helpers');
+  generateError,
+} = require("../helpers/helpers");
 
 const {
   userSchema,
   editUserSchema,
-  editPasswordUserSchema
-} = require('./validations/index');
+  editPasswordUserSchema,
+} = require("./validations/index");
+const { get } = require("lodash");
 
 // POST - /user ✅
 async function newUser(req, res, next) {
   let connection;
-  console.log('hola');
+  console.log("hola");
   try {
     // Validate body payload
     await userSchema.validateAsync(req.body);
@@ -30,21 +31,21 @@ async function newUser(req, res, next) {
 
     // Check if user email is already in the db
     const [
-      existing
-    ] = await connection.query('SELECT id from users where email=?', [email]);
+      existing,
+    ] = await connection.query("SELECT id from users where email=?", [email]);
 
     const [
-      existing1
-    ] = await connection.query('SELECT id from users where nickName=?', [
-      nickName
+      existing1,
+    ] = await connection.query("SELECT id from users where nickName=?", [
+      nickName,
     ]);
 
     if (existing.length) {
-      throw generateError('El email ya existe en la base de datos', 409);
+      throw generateError("El email ya existe en la base de datos", 409);
     }
 
     if (existing1.length) {
-      throw generateError('El nickname ya esta en uso', 409);
+      throw generateError("El nickname ya esta en uso", 409);
     }
 
     // hash password
@@ -53,18 +54,18 @@ async function newUser(req, res, next) {
 
     const validationURL = `${process.env.PUBLIC_HOST}/users/validate?code=${registrationCode}`;
 
-    let role = 'user';
+    let role = "user";
 
     try {
       await sendEmail({
         email: email,
-        title: 'Valida tu cuenta de usuario en la app de diario mysql',
-        content: `Para validar tu cuenta de usuario pega esta url en tu navegador: ${validationURL}`
+        title: "Valida tu cuenta de usuario en la app de diario mysql",
+        content: `Para validar tu cuenta de usuario pega esta url en tu navegador: ${validationURL}`,
       });
     } catch (error) {
       console.error(error.response.body);
       throw new Error(
-        'Error en el envío de mail. Inténtalo de nuevo más tarde.'
+        "Error en el envío de mail. Inténtalo de nuevo más tarde."
       );
     }
     await connection.query(
@@ -76,9 +77,9 @@ async function newUser(req, res, next) {
     );
     console.log(email);
     res.send({
-      status: 'ok',
+      status: "ok",
       message:
-        'Usuario registrado. Mira tu email para activarlo. Mira la carpeta del SPAM que seguro que está allí.'
+        "Usuario registrado. Mira tu email para activarlo. Mira la carpeta del SPAM que seguro que está allí.",
     });
   } catch (error) {
     next(error);
@@ -92,7 +93,7 @@ async function getUser(req, res, next) {
   try {
     connection = await getConnection();
 
-    const [result] = await connection.query('SELECT * FROM users');
+    const [result] = await connection.query("SELECT * FROM users");
     // Throw 404 if no results
 
     // const [userData] = result;
@@ -109,8 +110,51 @@ async function getUser(req, res, next) {
     // }
 
     res.send({
-      status: 'ok',
-      data: result[0]
+      status: "ok",
+      data: result[0],
+    });
+  } catch (error) {
+    next(error);
+  } finally {
+    if (connection) connection.release();
+  }
+}
+
+//getUserLog
+async function getUserLog(req, res, next) {
+  console.log("hola");
+  let connection;
+  try {
+    const { id } = req.params;
+    connection = await getConnection();
+    const [result] = await connection.query(
+      `
+      SELECT * 
+      FROM users WHERE id=?  
+    `,
+      [id]
+    );
+    const [userData] = result;
+
+    // Throw 404 if no results
+    if (!result.length) {
+      throw generateError(`There is no user with the id ${id}`, 404);
+    }
+
+    // const payload = {
+    //   registrationDate: userData.registrationDate,
+    //   realName: userData.realName,
+    //   avatar: userData.avatar,
+    // };
+
+    // if (userData.id === req.auth.id || req.auth.role === "admin") {
+    //   payload.email = userData.email;
+    //   payload.role = userData.role;
+    // }
+
+    res.send({
+      status: "ok",
+      data: userData,
     });
   } catch (error) {
     next(error);
@@ -130,14 +174,14 @@ async function validateUser(req, res, next) {
 
     // Actualizamos el usuario
     const [
-      result
+      result,
     ] = await connection.query(
-      'UPDATE users SET active=1,registrationCode=NULL WHERE registrationCode=?',
+      "UPDATE users SET active=1,registrationCode=NULL WHERE registrationCode=?",
       [code]
     );
 
     if (result.affectedRows === 0) {
-      throw generateError('Validación incorrecta', 400);
+      throw generateError("Validación incorrecta", 400);
     }
 
     // // Si queremos dar el token descomentar las siguientes líneas
@@ -152,8 +196,8 @@ async function validateUser(req, res, next) {
     // });
 
     res.send({
-      status: 'ok',
-      message: 'Usuario validado, ya puedes hacer login.'
+      status: "ok",
+      message: "Usuario validado, ya puedes hacer login.",
       // data: {
       //   token
       // }
@@ -177,15 +221,15 @@ async function loginUser(req, res, next) {
 
     // Find the user in the db by email
     const [
-      dbUser
+      dbUser,
     ] = await connection.query(
-      'SELECT id, email, password, role from users where email=?',
+      "SELECT id, email, password, role from users where email=? AND active=1",
       [email]
     );
 
     if (!dbUser.length) {
       throw generateError(
-        'No hay ningún usuario activo con ese email en la base de datos. Si te acabas de registrar valida el email',
+        "No hay ningún usuario activo con ese email en la base de datos. Si te acabas de registrar valida el email",
         404
       );
     }
@@ -195,20 +239,23 @@ async function loginUser(req, res, next) {
     const passwordsMath = await bcrypt.compare(password, user.password);
 
     if (!passwordsMath) {
-      throw generateError('Password incorrecta', 401);
+      throw generateError("Password incorrecta", 401);
     }
 
     // Build jsonwebtoken
     const tokenPayload = { id: user.id, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.SECRET, {
-      expiresIn: '30d'
+      expiresIn: "30d",
     });
 
     // Create response
     res.send({
-      status: 'ok',
-      message: 'Login correcto',
-      data: { token }
+      status: "ok",
+      message: "Login correcto",
+      data: {
+        token: token,
+        id: user.id,
+      },
     });
   } catch (error) {
     next(error);
@@ -220,12 +267,12 @@ async function loginUser(req, res, next) {
 // PUT user :id -- edit user ✅
 async function editUser(req, res, next) {
   let connection;
-
+  console.log("hola");
   try {
     await editUserSchema.validateAsync(req.body);
 
     const { id } = req.params;
-    const { realName, email } = req.body;
+    const { nickName } = req.body;
 
     connection = await getConnection();
 
@@ -237,15 +284,15 @@ async function editUser(req, res, next) {
     `,
       [id]
     );
-
+    console.log(current);
     if (!current.length) {
       throw generateError(`The user with id ${id} does not exist`, 404);
     }
 
     // Check if auth user is the same as :id or is admin
-    if (current[0].id !== req.auth.id && req.auth.role !== 'admin') {
-      throw generateError('No tienes permisos para editar este usuario', 401);
-    }
+    // if (current[0].id !== req.auth.id && req.auth.role !== "admin") {
+    //   throw generateError("No tienes permisos para editar este usuario", 401);
+    // }
 
     // Check if there is a uploaded avatar and process it
 
@@ -259,7 +306,7 @@ async function editUser(req, res, next) {
           await deletePhoto(current.avatar);
         }
       } catch (error) {
-        throw generateError('Can not process upload image. Try again.', 400);
+        throw generateError("Can not process upload image. Try again.", 400);
       }
     } else {
       savedFileName = current.avatar;
@@ -269,14 +316,14 @@ async function editUser(req, res, next) {
 
     await connection.query(
       `
-      UPDATE users SET realName=?, email=?, avatar=? WHERE id=?
+      UPDATE users SET nickName=?, avatar=? WHERE id=?
     `,
-      [realName, email, savedFileName, id]
+      [nickName, savedFileName, id]
     );
 
     res.send({
-      status: 'ok',
-      message: 'Usuario actualizado'
+      status: "ok",
+      message: "Usuario actualizado",
     });
   } catch (error) {
     next(error);
@@ -285,10 +332,10 @@ async function editUser(req, res, next) {
   }
 }
 
-// POST ID PASSWORD-- change password ✅
+// POST - /users/:id/password
 async function updatePasswordUser(req, res, next) {
   let connection;
-
+  console.log("hola");
   try {
     const { id } = req.params;
     // body: oldpassword, newPassword, newPasswordRepeat (opcional)
@@ -300,16 +347,16 @@ async function updatePasswordUser(req, res, next) {
 
     // Comprobar que el usuario del token es el mismo que el que vamos a cambiar la pass
 
-    if (Number(id) !== req.auth.id) {
-      throw generateError(
-        `No tienes permisos para cambiar la password del usuario con id ${id}`,
-        401
-      );
-    }
+    // if (Number(id) !== req.auth.id) {
+    //   throw generateError(
+    //     `You are not allowed to change the password of the user with id: ${id}`,
+    //     401
+    //   );
+    // }
 
     if (oldPassword === newPassword) {
       throw generateError(
-        'La nueva password no puede ser la misma que la antigua',
+        "The new password can not be the same as the older one",
         400
       );
     }
@@ -324,17 +371,17 @@ async function updatePasswordUser(req, res, next) {
 
     // Código un poco redundante
     if (!currentUser.length) {
-      throw generateError(`El usuario con id ${id} no existe`, 404);
+      throw generateError(`The user with id ${id} does not exist`, 404);
     }
 
     const [dbUser] = currentUser;
-
+    console.log(dbUser);
     // Comprobar que la vieja password envíada sea la correcta
-    // el orden es: passord sin encriptar, password encriptada
+    // el orden es: password sin encriptar, password encriptada
     const passwordsMath = await bcrypt.compare(oldPassword, dbUser.password);
 
     if (!passwordsMath) {
-      throw generateError('Tu password antigua es incorrecta', 401);
+      throw generateError("Your old password is incorrect", 401);
     }
 
     // generar hash de la password
@@ -349,9 +396,9 @@ async function updatePasswordUser(req, res, next) {
     );
 
     res.send({
-      status: 'ok',
+      status: "ok",
       message:
-        'Cambio de password realizado correctamente. Todos tus tokens quedan invalidados. Haz login de nuevo para conseguir un token válido.'
+        "Password changed. Old tokens will not work, login to get your new token.",
     });
   } catch (error) {
     next(error);
@@ -359,12 +406,42 @@ async function updatePasswordUser(req, res, next) {
     if (connection) connection.release();
   }
 }
+// DELETE - /users/:id
+async function deleteUser(req, res, next) {
+  try {
+    const connection = await getConnection();
+    const { id } = req.params;
+    const [
+      [email],
+    ] = await connection.query("SELECT email from users WHERE id=?", [id]);
+    const formatedMail = "DELETED: " + email.email;
+    console.log(formatedMail);
+    await connection.query("UPDATE users SET email=? WHERE id=?", [
+      formatedMail,
+      id,
+    ]);
+    await connection.query(
+      "UPDATE challenge_questions SET hidden=1 where user_id=?",
+      [id]
+    );
 
+    connection.release();
+
+    res.send({
+      status: "ok",
+      message: `The user with id ${id} has been deleted`,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   newUser,
   getUser,
   validateUser,
   loginUser,
   updatePasswordUser,
-  editUser
+  editUser,
+  getUserLog,
+  deleteUser,
 };

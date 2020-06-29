@@ -1,8 +1,8 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
-const { getConnection } = require('../db');
-const { generateError } = require('../helpers/helpers');
+const { getConnection } = require("../db");
+const { generateError } = require("../helpers/helpers");
 
 async function userIsAuthenticated(req, res, next) {
   let connection;
@@ -12,19 +12,19 @@ async function userIsAuthenticated(req, res, next) {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      throw generateError('Falta la cabecera de Authorization');
+      throw generateError("Falta la cabecera de Authorization");
     }
 
-    const authorizationParts = authorization.split(' ');
+    const authorizationParts = authorization.split(" ");
 
     let token;
 
     if (authorizationParts.length === 1) {
       token = authorization;
-    } else if (authorizationParts[0] === 'Bearer') {
+    } else if (authorizationParts[0] === "Bearer") {
       token = authorizationParts[1];
     } else {
-      throw generateError('No puedo leer el token');
+      throw generateError("No puedo leer el token");
     }
 
     let decoded;
@@ -32,7 +32,7 @@ async function userIsAuthenticated(req, res, next) {
     try {
       decoded = jwt.verify(token, process.env.SECRET);
     } catch (error) {
-      throw new Error('El token no está bien formado');
+      throw new Error("El token no está bien formado");
     }
 
     // Comprobar que la fecha de expedición del token sea mayor a la
@@ -42,23 +42,23 @@ async function userIsAuthenticated(req, res, next) {
     connection = await getConnection();
 
     const [
-      result
+      result,
     ] = await connection.query(
-      'SELECT lastPasswordUpdate FROM users WHERE id=?',
+      "SELECT lastPasswordUpdate FROM users WHERE id=?",
       [id]
     );
 
     if (!result.length) {
-      throw new Error('El usuario no existe en la base de datos');
+      throw new Error("El usuario no existe en la base de datos");
     }
-    console.log('hola ');
+    console.log("hola ");
     const [user] = result;
 
     // comprobar que la fecha del token menor mayor que user.lastPasswordUpdate
     // Tened en cuenta que el iat del token está guardado en segundos y node trabaja en
     // milisegundos
     if (new Date(iat * 10000) < new Date(user.lastPasswordUpdate)) {
-      throw new Error('El token ya no vale, haz login para conseguir otro');
+      throw new Error("El token ya no vale, haz login para conseguir otro");
     }
 
     req.auth = decoded;
@@ -72,8 +72,8 @@ async function userIsAuthenticated(req, res, next) {
 }
 
 function userIsAdmin(req, res, next) {
-  if (!req.auth || req.auth.role !== 'admin') {
-    const error = new Error('No tienes privilegios de administración');
+  if (!req.auth || req.auth.role !== "admin") {
+    const error = new Error("No tienes privilegios de administración");
     error.httpCode = 401;
     return next(error);
   }
@@ -83,5 +83,5 @@ function userIsAdmin(req, res, next) {
 
 module.exports = {
   userIsAuthenticated,
-  userIsAdmin
+  userIsAdmin,
 };

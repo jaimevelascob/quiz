@@ -1,35 +1,35 @@
 <template>
   <div>
+    <!-- MENU-->
+    <div>
+      <Menu></Menu>
+    </div>
+    <!-- /MENU-->
+
     <div>
       <div>
         <p class="color1" v-show="required">Tienes datos sin completar</p>
         <p class="color2" v-show="match">Las contraseñas no coinciden</p>
-        <div>
-          <input
-            type="title"
-            name="title"
-            v-model="title"
-            placeholder="Nombre del reto..."
-          />
+        <div v-show="modal">
+          <input type="text" id="title" v-model="time = this.challenges[0].time" />
+        </div>
+        <div v-show="modal">
+          <input type="text" id="title" v-model="title = this.challenges[0].title" />
+        </div>
+        <div v-show="modal">
+          <input type="text" id="title" v-model="challenge_id = this.challenges[0].id" />
+        </div>
+        <div v-show="modal">
+          <input type="text" id="times" v-model=" user_id = this.userID" />
         </div>
         <div>
-          <input
-            type="text"
-            name="text"
-            v-model="text"
-            placeholder="Pregunta..."
-          />
+          <input type="text" name="text" v-model="text" placeholder="Pregunta..." />
         </div>
         <!-- PREGUNTA A-->
         <div>
           <ul>
             <li>
-              <input
-                type="answer"
-                name="answer"
-                v-model="answerA"
-                placeholder="Question A..."
-              />
+              <input type="answer" name="answer" v-model="answerA" placeholder="Question A..." />
             </li>
             <li>
               <img src />
@@ -39,12 +39,7 @@
         <!-- PREGUNTA B-->
         <div>
           <ul>
-            <input
-              type="answer"
-              name="answer"
-              v-model="answerB"
-              placeholder="Question B..."
-            />
+            <input type="answer" name="answer" v-model="answerB" placeholder="Question B..." />
             <li>
               <img src />
             </li>
@@ -53,12 +48,7 @@
         <!-- PREGUNTA C-->
         <div>
           <ul>
-            <input
-              type="answer"
-              name="answer"
-              v-model="answerC"
-              placeholder="Question C..."
-            />
+            <input type="answer" name="answer" v-model="answerC" placeholder="Question C..." />
             <li>
               <img src />
             </li>
@@ -67,39 +57,29 @@
         <!-- PREGUNTA D-->
         <div>
           <ul>
-            <input
-              type="answer"
-              name="answer"
-              v-model="answerD"
-              placeholder="Question D..."
-            />
+            <input type="answer" name="answer" v-model="answerD" placeholder="Question D..." />
           </ul>
-          <div>
-            <input
-              type="text"
-              name="time"
-              v-model="time"
-              placeholder="Tiempo..."
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="difficulty"
-              v-model="difficulty"
-              placeholder="difficulty..."
-            />
-          </div>
         </div>
-        <!-- SUBIR IMAGEN -->
-        <label for="image">Elije una imagen:</label>
-        <input
-          type="file"
-          id="file"
-          ref="file"
-          accept="image/png, image/jpg"
-          v-on:change="handleFileUpload()"
-        />
+      </div>
+      <div>
+        <!-- CHECKBOX -->
+        <h2>Selecciona la respuesta</h2>
+        <div id="checkbox">
+          <input type="radio" id="a" value="A" v-model="solution" @click="bottonFijar()" />
+          <label for="A">A</label>
+          <br />
+          <input type="radio" id="b" value="B" v-model="solution" @click="bottonFijar()" />
+          <label for="B">B</label>
+          <br />
+          <input @click="pulse()" type="radio" id="c" value="C" v-model="solution" />
+          <label for="C">C</label>
+          <br />
+          <input @click="pulse()" type="radio" id="d" value="D" v-model="solution" />
+          <label for="D">D</label>
+          <br />
+          <span>Eligió: {{ solution }}</span>
+          <br />
+        </div>
       </div>
       <div>
         <button @click="uploadEvent()">Crear</button>
@@ -113,15 +93,21 @@
 import axios from "axios"; // Importando AXIOS
 //IMPORTANDO SWEETALERT
 import Swal from "sweetalert2";
-
+// IMPORTANDO MENU
+import Menu from "@/components/MenuCustom.vue";
 // Importando funcion addChallenge
-import { addChallenge } from "../api/utils";
+import { addChallengeQuestion } from "../api/utils";
+//IMPORTANDO meetingS
+import challengelist from "@/components/ChallengeList.vue";
 export default {
   name: "ChallengeQuestions",
+  components: { Menu, challengelist },
   data() {
     return {
+      challenges: [],
       title: "",
       text: "",
+      newtitle: "hola",
       answerA: "",
       answerB: "",
       answerC: "",
@@ -131,21 +117,33 @@ export default {
       match: false,
       time: "",
       file: "",
-      difficulty: "",
+      solution: "",
+      modal: "",
+      user_id: "",
+      challenge_id: ""
     };
   },
   methods: {
+    getUserName() {
+      if (localStorage.getItem("id")) {
+        this.userID = localStorage.getItem("id");
+        this.modal = false;
+      } else {
+        this.userID = 0;
+        this.modal = true;
+      }
+    },
+
     //COMPROBAR QUE LOS DATOS NO ESTÁN VACIOS
     validatingData() {
       if (
-        this.title === "" ||
         this.time === "" ||
         this.text === "" ||
         this.answerA === "" ||
         this.answerB === "" ||
         this.answerD === "" ||
-        this.difficulty === "" ||
-        this.answerC === ""
+        this.answerC === "" ||
+        this.solution === ""
       ) {
         this.correctData = false;
         this.required = true;
@@ -161,7 +159,6 @@ export default {
     },
     //AÑADIR NUEVO USUARIO A LA BBDD
     async uploadEvent() {
-      console.log(this.file);
       this.validatingData();
       if (this.correctData) {
         try {
@@ -173,17 +170,19 @@ export default {
           photoFormData.append("answerB", this.answerB);
           photoFormData.append("answerC", this.answerC);
           photoFormData.append("answerD", this.answerD);
-          photoFormData.append("difficulty", this.difficulty);
           photoFormData.append("time", this.time);
+          photoFormData.append("solution", this.solution);
+          photoFormData.append("user_id", this.user_id);
+          photoFormData.append("challenge_id", this.challenge_id);
           if (this.file.length) {
             photoFormData.append("photo", this.file);
-            console.log(this.file);
           }
-          await addChallenge(photoFormData);
+          localStorage.removeItem("title");
+          await addChallengeQuestion(photoFormData);
           Swal.fire({
             icon: "success",
             title: "Has subido tu challenge!",
-            text: "Buscalo en el home para jugarlo!",
+            text: "Buscalo en el home para jugarlo!"
           });
           this.$router.push("/challenges");
         } catch (error) {
@@ -192,8 +191,25 @@ export default {
       }
       return;
     },
+    // CONSEGUIR ANSWER
+    async getChallenge() {
+      let self = this;
+      let data = localStorage.getItem("title", this.title);
+      console.log(data);
+      await axios
+        .get("http://localhost:3000/challenge/" + self.$route.params.id)
+        .then(function(response) {
+          self.challenges = response.data.data;
+        })
+        .catch(function(error) {
+          if (error.response) {
+            alert(error.response.data.message);
+          }
+        });
+    },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
+      console.log(this.file);
     },
     //LIMPIAR CAMPOS INPUT
     emptyFields() {
@@ -206,8 +222,46 @@ export default {
       //MENSAJE SWAL
       this.$router.push("/challenges");
     },
+    bottonFijar() {
+      this.pulse();
+
+      // alert(this.solution);
+      this.validatingData();
+      if (this.correctData) {
+        try {
+          //GUARDAR LA SOLUCION EN LOCALSTORAGE
+          localStorage.setItem("solucion", this.solution);
+        } catch (error) {
+          alert(error.response.data.message);
+        }
+      }
+    },
+    pulse() {
+      let clear = document.getElementById("checkbox");
+      if (
+        this.solution == "A" ||
+        this.solution == "B" ||
+        this.solution == "C" ||
+        this.solution == "D"
+      )
+        return this.solution;
+
+      // COGER EL TITTLE PARA GUARDARLO
+      let titulo = this.challenges[0].id;
+    },
+    // ESCONDER TITLE
+    titleHind() {
+      this.modal = false;
+    }
   },
+  created() {
+    this.getChallenge();
+    this.titleHind();
+    this.getUserName();
+    // this.validateQuestion();
+  }
 };
 </script>
 
-<style></style>
+<style scoped>
+</style>

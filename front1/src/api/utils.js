@@ -5,30 +5,63 @@ const ENDPOINT = "http://localhost:3000";
 const AUTH_TOKEN_KEY = "authToken";
 const ROLE = "role";
 
-//FUNCION LOGIN
-export function loginUser(email, password) {
+// FUNCIÓN DE LOGIN
+export function loginUser(usuario, password) {
   return new Promise(async (resolve, reject) => {
     try {
       let res = await axios({
-        url: `${ENDPOINT}/users/login`, //URL DE LA AUTENTICACIÓN
-        method: "POST", //MÉTODO DE LA AUTENTIFICACIÓN
+        url: `${ENDPOINT}/users/login`, // URL DE LA AUTENTICACIÓN
+        method: "POST", // MÉTODO DE LA AUTENTICACIÓN
         data: {
-          email: email,
+          email: usuario,
           password: password,
-        }, // DATOS DE LA AUTENTIFICACIÓN
+        }, // DATOS DE LA AUTENTICACIÓN
       });
-      setAuthToken(res.data.data.token);
+      setAuthToken(res.data.data);
       resolve();
     } catch (err) {
-      if (err.response) {
-        alert(err.response.data.message);
-      }
-
-      console.log("Error en login: ", err);
+      reject(err);
+    }
+  });
+}
+//GET USERNAME (GETS AN USERNAME WITH AN INPUT ID)
+export function getUserName(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let res = await axios({
+        url: `${ENDPOINT}/userName`, // URL DE LA AUTENTICACIÓN
+        method: "GET", // MÉTODO DE LA AUTENTICACIÓN
+        data: {
+          id: id,
+        },
+      });
+      resolve(res.data.emailExists);
+    } catch (err) {
+      console.log("Error consiguiendo el nombre: ", err);
+      reject(err);
     }
   });
 }
 
+// FUNCIÓN DE ADDCHALLENGE-questions
+export function addChallengeQuestion(photoFormData) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let res = await axios({
+        url: `${ENDPOINT}/challenge/questions`, // URL DE LA AUTENTICACIÓN
+        method: "POST", // MÉTODO DE LA AUTENTICACIÓN
+        data: photoFormData,
+        headers: {
+          "Content-Type": "multipart/form-data; boundary=${form._boundary}",
+        },
+      });
+      resolve();
+    } catch (err) {
+      console.log("Error en Registro: ", err);
+      reject(err);
+    }
+  });
+}
 // FUNCIÓN DE ADDCHALLENGE
 export function addChallenge(photoFormData) {
   return new Promise(async (resolve, reject) => {
@@ -49,21 +82,26 @@ export function addChallenge(photoFormData) {
   });
 }
 
-//LOGOUT
+// LOGOUT
 export function clearLogin() {
-  axios.defaults.headers.common["Authorization"] = "";
+  axios.defaults.headers.common["Authorization"] = ``;
   localStorage.removeItem(AUTH_TOKEN_KEY);
+  localStorage.removeItem("id");
+  localStorage.removeItem("name");
   localStorage.removeItem("Usuario");
-  clearAdmin();
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("title");
+  localStorage.removeItem("solucion");
+  localStorage.removeItem("time");
 }
 
 // ========================= TOKEN =====================
 
-//GUARDAR TOKEN EN LOCALSTORAGE
+// GUARDAR TOKEN EN LOCALSTORAGE
 export function setAuthToken(token) {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  localStorage.setItem(AUTH_TOKEN_KEY, token);
-  localStorage.setItem("userID", payload.id);
+  axios.defaults.headers.common["Authorization"] = token.token;
+  localStorage.setItem(AUTH_TOKEN_KEY, token.token);
+  localStorage.setItem("id", token.id);
 }
 
 //COGER EL TOKEN

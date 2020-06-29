@@ -1,6 +1,7 @@
 <template>
   <div class="register">
     <div class="registerBox">
+      <Menu></Menu>
       <h2>Registrate</h2>
       <p class="color1" v-show="required">Tienes datos sin completar</p>
       <p class="color2" v-show="match">Las contraseñas no coinciden</p>
@@ -19,7 +20,7 @@
       <br />
       <div>
         <button @click="addUser(email, password, nickName)">Registro</button>
-        <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
+        <router-link :to="{ name: 'Login' }">Login</router-link>
       </div>
     </div>
   </div>
@@ -31,10 +32,10 @@ import axios from "axios"; // Importando AXIOS
 import Swal from "sweetalert2";
 
 // IMPORTANDO MENU
-// import Menu from "@/components/Menu.vue";
+import Menu from "@/components/MenuCustom.vue";
 export default {
   name: "Registrer",
-  components: {},
+  components: { Menu },
   data() {
     return {
       email: "",

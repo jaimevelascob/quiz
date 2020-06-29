@@ -1,57 +1,54 @@
 <template>
   <div class="login">
+    <!-- MENU -->
+    <div>
+      <Menu></Menu>
+    </div>
     <h2>Haz login</h2>
     <!-- NOMBRE DE LA PAGINA -->
     <vue-headful title="Loging" description="Logging page" />
     <!-- /NOMBRE DE LA PAGINA -->
     <div class="log">
-      <input
-        type="text"
-        name="usuario"
-        v-model="email"
-        placeholder="email..."
-      />
+      <input type="text" name="usuario" v-model="usuario" placeholder="email..." />
       <br />
 
-      <input
-        type="password"
-        name="password"
-        v-model="password"
-        placeholder="Password..."
-      />
+      <input type="password" name="password" v-model="password" placeholder="Password..." />
       <br />
 
       <button @click="login()">Login</button>
-      <router-link :to="{ name: 'Register' }">Registro</router-link>
+      <router-link :to="{ name: 'Registrer' }">Registro</router-link>
     </div>
   </div>
 </template>
 
 <script>
 import { loginUser } from "../api/utils";
+import Menu from "@/components/MenuCustom.vue";
 export default {
   name: "Login",
+  components: { Menu },
   data() {
     return {
-      email: "",
-      password: "",
+      usuario: "",
+      password: ""
     };
   },
   methods: {
     async login() {
       try {
-        if (this.email === "" || this.password === "")
+        if (this.usuario === "" || this.password === "")
           throw Error("Datos vacios");
-        await loginUser(this.email, this.password);
+        await loginUser(this.usuario, this.password);
         //GUARDAR EL EMAIL EN LOCALSTORAGE
-        localStorage.setItem("Usuario", this.email);
+        localStorage.setItem("name", this.usuario);
+
         //LLEVAR A LA PAGINA DE PRODUCTOS
-        this.$router.push("/");
+        this.$router.push("/challenges");
       } catch (error) {
         alert(`Error: ${error}`);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

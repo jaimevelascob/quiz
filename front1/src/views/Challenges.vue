@@ -1,5 +1,8 @@
 <template>
   <div class="capauno">
+    <div>
+      <Menu></Menu>
+    </div>
     <!-- BUSQUEDA -->
     <div class="searchProduct">
       <select v-model="filter">
@@ -45,11 +48,13 @@
 
 <script>
 import axios from "axios"; // Importando AXIOS
+// IMPORTANDO MENU
+import Menu from "@/components/MenuCustom.vue";
 //IMPORTANDO meetingS
 import challengelist from "@/components/ChallengeList.vue";
 export default {
   name: "Challenges",
-  components: { challengelist },
+  components: { challengelist, Menu },
   props: ["id"],
   data() {
     return {
@@ -58,7 +63,7 @@ export default {
       search: "",
       filter: "",
       dateInput: false,
-      noResults: false,
+      noResults: false
     };
   },
   methods: {
@@ -82,7 +87,7 @@ export default {
     clearInput() {
       (this.search = ""), (this.filter = "");
       this.getChallenge();
-    },
+    }
   },
   watch: {
     // cada vez que la pregunta cambie, esta función será ejecutada
@@ -99,11 +104,11 @@ export default {
       } else {
         this.noResults = false;
       }
-    },
+    }
   },
   created() {
     this.getChallenge();
-  },
+  }
 };
 </script>
 
