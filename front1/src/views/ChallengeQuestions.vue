@@ -83,6 +83,8 @@
       </div>
       <div>
         <button @click="uploadEvent()">Crear</button>
+        <button @click="push">Volver</button>
+
         <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
       </div>
     </div>
@@ -133,7 +135,10 @@ export default {
         this.modal = true;
       }
     },
-
+    // BOTON VOLVER
+    push() {
+      this.$router.push("/challenges");
+    },
     //COMPROBAR QUE LOS DATOS NO ESTÁN VACIOS
     validatingData() {
       if (

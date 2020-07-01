@@ -1,36 +1,38 @@
 <template>
   <div class="capauno">
-    <div class="awtestimonials">
+    <div v-show="pulsarboton">
+      <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
+      <button @click="settime()" value="inicio">INCIAR</button>
+    </div>
+    <div v-show="capsula" class="awtestimonials">
+      <div>
+        <li id="times" v-model="challenges[q].time">{{ challenges[q].time }}</li>
+      </div>
       <ul class="roc">
         <li>
           <div id="awuserdata">
-            <!-- <div>
-              <li>{{ q }} {{ time }}</li>
-              <input type="text" id="times" v-model="challenges[q].time" />
-              <button @click="settime()" value="inicio">Iniciar</button>
-            </div>-->
             <div>
               <li>{{ challenges[q].text }}</li>
             </div>
             <!-- CHALLENGE RESPUESTAS -->
             <div>
               <li>
-                <p>answerA: {{ challenges[q].answerA }}</p>
+                <p>{{ challenges[q].answerA }}</p>
                 <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
                 <label for="A">A</label>
               </li>
               <li>
-                <p>answerB: {{ challenges[q].answerB }}</p>
+                <p>{{ challenges[q].answerB }}</p>
                 <input type="radio" id="b" value="B" v-model="answer" @click="bottonFijar()" />
                 <label for="B">B</label>
               </li>
               <li>
-                <p>answerC: {{ challenges[q].answerC }}</p>
+                <p>{{ challenges[q].answerC }}</p>
                 <input @click="pulse()" type="radio" id="c" value="C" v-model="answer" />
                 <label for="C">C</label>
               </li>
               <li>
-                <p>answerD: {{ challenges[q].answerD }}</p>
+                <p>{{ challenges[q].answerD }}</p>
                 <input @click="pulse()" type="radio" id="d" value="D" v-model="answer" />
                 <label for="D">D</label>
               </li>
@@ -69,6 +71,7 @@
 import axios from "axios"; // Importando AXIOS
 //IMPORTANDO SWEETALERT
 import Swal from "sweetalert2";
+import { shuffle } from "lodash";
 export default {
   name: "Challenge",
   props: ["id"],
@@ -80,7 +83,8 @@ export default {
       answer: "",
       correctData: false,
       challenge_questions_id: "",
-      modal: ""
+      modal: "",
+      pulsarboton: true
     };
   },
   methods: {
@@ -113,7 +117,7 @@ export default {
           "http://localhost:3000/challenge/questions/" + self.$route.params.id
         )
         .then(function(response) {
-          self.challenges = response.data.data;
+          self.challenges = shuffle(response.data.data);
         })
         .catch(function(error) {
           if (error.response) {
@@ -161,22 +165,27 @@ export default {
       });
     },
 
-    // settime() {
-    //   let time = document.getElementById("times");
-    //   this.crono();
-    //   // alert(time.value);
-    // },
+    settime() {
+      this.capsula = true;
+      this.pulsarboton = false;
+      this.crono();
+    },
 
-    // crono() {
-    //   if (this.time == 0) {
-    //     this.q = 1;
-    //     this.time = "end";
-    //     console.log(time);
-    //   } else {
-    //     this.time = this.time - 1;
-    //     setTimeout(this.crono, 1000);
-    //   }
-    // },
+    crono() {
+      // SI LLEGA A 0
+      if (this.challenges[this.q].time == 0) {
+        this.time = "end";
+        Swal.fire({
+          icon: "error",
+          title: "U LOSE MAY FRIEND",
+          text: "OTRA VEZ SERA 😈"
+        });
+        // SI ES MAYOR QUE 0
+      } else {
+        this.challenges[this.q].time = this.challenges[this.q].time - 1;
+        setTimeout(this.crono, 1000);
+      }
+    },
     bottonFijar() {
       this.pulse();
       // this.validatingData();
