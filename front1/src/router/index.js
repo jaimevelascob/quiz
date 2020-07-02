@@ -99,9 +99,9 @@ const routes = [
     },
   },
   {
-    path: "/probando",
-    name: "probando",
-    component: () => import("../views/Probando.vue"),
+    path: "/instrucciones",
+    name: "Instrucciones",
+    component: () => import("../views/Instrucciones.vue"),
     //RUTA PUBLICA
     meta: {
       allowAnonymous: true,

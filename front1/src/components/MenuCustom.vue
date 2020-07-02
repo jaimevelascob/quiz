@@ -6,6 +6,7 @@
           <router-link to="/CreateChallenge">Crear reto</router-link>|
           <router-link to="/challenges">Lista De Retos</router-link>|
           <router-link id="link" :to="{ name: 'Profile', params:{ id: this.userID }}">Mi perfil</router-link>|
+          <router-link to="/instrucciones">Instrucciones</router-link>|
           <router-link to="/about">About</router-link>|
         </div>
         <div class="users">

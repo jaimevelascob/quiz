@@ -13,7 +13,6 @@
     <!-- BUTTONS -->
     <div>
       <section v-show="getIds()">
-        <button @click="openModal('edit')">Editar</button>
         <button @click="openModal('pass')">Cambiar Contraseña</button>
         <button @click="eliminar()">Borrar Perfil</button>
       </section>
@@ -22,34 +21,40 @@
     <!-- CONTRASEÑA -->
     <div class="modal" v-show="modalPass">
       <div class="modalBox">
-        <label for="password">Passwords:</label>
+        <p class="color1" v-show="required">Tienes datos sin completar</p>
+        <p class="color2" v-show="match">Las contraseñas no coinciden</p>
+        <p>Contraseña antigua</p>
         <input
           name="oldpassword"
           required
           type="password"
           minlength="6"
           maxlength="100"
-          placeholder="Introduce tu contraseña"
+          placeholder="antigua contraseña"
           v-model="old_user_password"
         />
+        <br />
+        <p>Contraseña Nueva</p>
         <input
           name="password"
           required
           type="password"
           minlength="6"
           maxlength="100"
-          placeholder="Introduce tu contraseña"
+          placeholder="nueva contraseña"
           v-model="password"
         />
+        <p>Repite la contraseña</p>
         <input
           name="password2"
           required
           type="password"
           minlength="6"
           maxlength="100"
-          placeholder="Repite tu contraseña"
+          placeholder="Repite la contraseña"
           v-model="password2"
         />
+        <br />
         <button @click="closeModal()">Cancelar</button>
         <button @click="changePassword()">Cambiar Contraseña</button>
       </div>
@@ -80,10 +85,31 @@ export default {
       modalEdit: false,
       modalPass: false,
       email: "",
-      role: ""
+      role: "",
+      correctData: false,
+      required: false,
+      match: false
     };
   },
   methods: {
+    validatingData() {
+      if (
+        this.old_user_password === "" ||
+        this.password === "" ||
+        this.password2 === ""
+      ) {
+        this.correctData = false;
+        this.required = true;
+        // SI LA PASS NO ES =
+      } else if (this.password != this.password2) {
+        this.match = true;
+        // SI LA PASS ES =
+      } else {
+        this.correctData = true;
+        this.required = false;
+        this.match = false;
+      }
+    },
     logoutUser() {
       clearLogin();
       this.$router.push("/");
@@ -125,30 +151,31 @@ export default {
         });
     },
     changePassword() {
-      if (this.user_password !== this.user_password2) {
-        alert("Las contraseñas no coinciden");
-        return;
+      this.validatingData();
+      if (this.correctData == true) {
+        let self = this;
+        axios
+          .post(`http://localhost:3000/users/${self.profile.id}/password`, {
+            oldPassword: self.old_user_password,
+            newPassword: self.password
+          })
+          .then(function(response) {
+            console.log(response);
+            Swal.fire(
+              "Has cambiado tu contraseña!",
+              "Seras redirigido al Login.",
+              "success"
+            );
+            self.logoutUser();
+          })
+          .catch(function(error) {
+            if (error.response) {
+              alert(error.response.data.message);
+            }
+          });
+      } else {
+        console.log("No has rellenado todos los campos");
       }
-      let self = this;
-      axios
-        .post(`http://localhost:3000/users/${self.profile.id}/password`, {
-          oldPassword: self.old_user_password,
-          newPassword: self.password
-        })
-        .then(function(response) {
-          console.log(response);
-          Swal.fire(
-            "Has cambiado tu contraseña!",
-            "Seras redirigido al Login.",
-            "success"
-          );
-          self.logoutUser();
-        })
-        .catch(function(error) {
-          if (error.response) {
-            alert(error.response.data.message);
-          }
-        });
     },
     edite() {
       let self = this;

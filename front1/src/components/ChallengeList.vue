@@ -8,9 +8,9 @@
         </div>
         <!-- /id-->
         <!-- imagen-->
-        <div>
+        <!-- <div>
           <img :src="challenge.image ? path + challenge.image : ''" alt />
-        </div>
+        </div>-->
         <!-- /imagen-->
         <!-- Nombre difficulty-->
         <div>

@@ -40,7 +40,14 @@
       <div></div>
     </div>
     <!-- COMPONENTE MEETINGS -->
-    <challengelist :challenges="challenges"></challengelist>
+    <div class="awtestimonials">
+      <challengelist :challenges="challenges"></challengelist>
+    </div>
+    <div class="pagination">
+      <!-- <i id="prev" class="awarrow awarrowleft" @click="AnswerChange()">a</i>
+      <br />
+      <i id="next" class="awarrow awarrowright" @click="AnswerChange()">a</i>-->
+    </div>
     <!-- NO RESULTS -->
     <p v-show="noResults" style="color:red">No results</p>
   </div>
@@ -67,6 +74,24 @@ export default {
     };
   },
   methods: {
+    // MOVER LAS PREGUNTAS
+    // AnswerChange() {
+    //   let firstChild, lastChild;
+    //   const prevArrow = document.querySelector("#prev");
+    //   const nextArrow = document.querySelector("#next");
+    //   const testimonials = document.querySelector(".awtestimonials");
+
+    //   document.addEventListener("click", () => {
+    //     if (event.target === prevArrow) {
+    //       lastChild = testimonials.lastElementChild;
+    //       console.log(lastChild);
+    //       testimonials.insertAdjacentElement("afterbegin", lastChild);
+    //     } else if (event.target === nextArrow) {
+    //       firstChild = testimonials.firstElementChild;
+    //       testimonials.insertAdjacentElement("beforeend", firstChild);
+    //     }
+    //   });
+    // },
     getChallenge() {
       let self = this;
       axios
@@ -84,9 +109,15 @@ export default {
           console.log(error);
         });
     },
+
     clearInput() {
       (this.search = ""), (this.filter = "");
       this.getChallenge();
+    },
+    next() {
+      if (this.challenges.length < 4) {
+      } else {
+      }
     }
   },
   watch: {
@@ -116,5 +147,37 @@ export default {
 button {
   padding: 1rem;
   width: 10%;
+}
+.awtestimonials {
+  max-width: 500%;
+  position: hidden;
+}
+.awarrow {
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  border: solid #eee;
+  padding: 20px;
+  border-width: 0 3px 3px 0;
+  cursor: pointer;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
+}
+.awarrow.awarrowleft {
+  right: 200px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.awarrow.awarrowright {
+  left: 200px;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.awarrow:hover {
+  border-color: #dca453;
+  box-shadow: 4px 3px 15px #a8fa8f;
+}
+.awuserdata {
+  display: block;
 }
 </style>

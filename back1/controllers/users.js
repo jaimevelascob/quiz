@@ -239,7 +239,7 @@ async function loginUser(req, res, next) {
     const passwordsMath = await bcrypt.compare(password, user.password);
 
     if (!passwordsMath) {
-      throw generateError("Password incorrecta", 401);
+      throw generateError("Contraseña incorrecta", 401);
     }
 
     // Build jsonwebtoken
@@ -381,7 +381,7 @@ async function updatePasswordUser(req, res, next) {
     const passwordsMath = await bcrypt.compare(oldPassword, dbUser.password);
 
     if (!passwordsMath) {
-      throw generateError("Your old password is incorrect", 401);
+      throw generateError("Tu antigua contraseña es incorrecta", 401);
     }
 
     // generar hash de la password

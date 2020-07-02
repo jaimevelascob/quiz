@@ -1,9 +1,10 @@
 <template>
   <div>
     <div class="profile">
-      <p>{{ profile.email ? 'Email: ' + profile.email : null}}</p>
       <p>{{ profile.id ? 'id: ' + profile.id : null}}</p>
-      <p>{{ profile.registrationDate ? 'Miembro desde: ' + profile.registrationDate : null}}</p>
+      <p>{{ profile.nickName ? 'Nick: ' + profile.nickName : null}}</p>
+      <p>{{ profile.email ? 'Email: ' + profile.email : null}}</p>
+      <p>{{ profile.registrationDate ? 'Miembro desde: ' + profile.registrationDate.substr(0,10) : null}}</p>
       <p>{{ profile.role ? 'Rol: ' + profile.role : null}}</p>
       <br />
     </div>

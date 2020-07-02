@@ -520,7 +520,24 @@ async function deleteChallenge(req, res, next) {
     next(error);
   }
 }
-
+// GET challenge 👀
+async function listChallengeQuestionsID(req, res, next) {
+  try {
+    console.log("hola");
+    const connection = await getConnection();
+    console.log("hola");
+    const [result] = await connection.query(
+      "SELECT * from challenge_questions"
+    );
+    console.log("hola");
+    res.send({
+      status: "ok",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   getChallengeVotes,
   voteChallenge,
@@ -536,4 +553,5 @@ module.exports = {
   createChallenge,
   challengeQuestion,
   deleteChallenge,
+  listChallengeQuestionsID,
 };

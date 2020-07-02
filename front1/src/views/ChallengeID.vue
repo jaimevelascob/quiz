@@ -58,11 +58,6 @@
           </div>
         </li>
       </ul>
-      <div>
-        <i id="awtestimonialsprev" class="awarrow awarrowleft" @click="AnswerChange()">a</i>
-        <br />
-        <i id="awtestimonialsnext" class="awarrow awarrowright" @click="AnswerChange()">a</i>
-      </div>
     </div>
   </div>
 </template>
@@ -145,24 +140,6 @@ export default {
             alert(error.response.data.message);
           }
         });
-    },
-    // MOVER LAS PREGUNTAS
-    AnswerChange() {
-      let firstChild, lastChild;
-      const prevArrow = document.querySelector("#awtestimonialsprev");
-      const nextArrow = document.querySelector("#awtestimonialsnext");
-      const testimonials = document.querySelector(".awtestimonials ul");
-
-      document.addEventListener("click", () => {
-        if (event.target === prevArrow) {
-          lastChild = testimonials.lastElementChild;
-          console.log(event.target);
-          testimonials.insertAdjacentElement("afterbegin", lastChild);
-        } else if (event.target === nextArrow) {
-          firstChild = testimonials.firstElementChild;
-          testimonials.insertAdjacentElement("beforeend", firstChild);
-        }
-      });
     },
 
     settime() {

@@ -30,7 +30,6 @@
               <option value="3">dificl</option>
             </select>
             <br />
-            <span>Seleccionados: {{ difficulty }}</span>
           </div>
         </div>
         <!-- TIME-DIFICULTY -->
