@@ -7,62 +7,68 @@
     <!-- /MENU-->
 
     <div class="pad">
-      <div>
-        <p class="color1" v-show="required">Tienes datos sin completar</p>
-        <p class="color2" v-show="match">Las contraseñas no coinciden</p>
-        <div v-show="modal">
-          <input type="text" id="times" v-model=" user_id = this.userID" />
-        </div>
-        <div>
-          <input type="title" name="title" v-model="title" placeholder="Nombre del reto..." />
-        </div>
-      </div>
-      <div>
-        <!-- TIME-DIFICULTY -->
-        <div>
-          <!-- DIFICULTAD -->
-
+      <div class="primero">
+        <div class="capa">
+          <div class="title">
+            <p class="color1" v-show="required">Tienes datos sin completar</p>
+            <p class="color2" v-show="match">Las contraseñas no coinciden</p>
+            <div v-show="modal">
+              <input type="text" id="times" v-model=" user_id = this.userID" />
+            </div>
+            <div class="titlep">
+              <input
+                class="input"
+                type="title"
+                name="title"
+                v-model="title"
+                placeholder="Nombre del reto..."
+              />
+            </div>
+          </div>
           <div>
-            <h4>DIFICULTAD</h4>
-            <select v-model="difficulty" multiple>
-              <option value="facil">facil</option>
-              <option value="medio">medio</option>
-              <option value="dificl">dificl</option>
-            </select>
-            <br />
+            <!-- TIME-DIFICULTY -->
+            <div class="dificultad">
+              <!-- DIFICULTAD -->
+              <h4>DIFICULTAD</h4>
+              <select v-model="difficulty" multiple>
+                <option value="facil">facil</option>
+                <option value="medio">medio</option>
+                <option value="dificl">dificl</option>
+              </select>
+              <br />
+            </div>
+            <!-- TIME-DIFICULTY -->
+            <div>
+              <div class="tiempo">
+                <h4>TIEMPO</h4>
+                <!-- TIEMPO -->
+                <select class="caja" v-model="time">
+                  <option>10</option>
+                  <option>20</option>
+                  <option>30</option>
+                  <option>40</option>
+                  <option>50</option>
+                  <option>60</option>
+                </select>
+                <br />
+              </div>
+            </div>
+            <!-- SUBIR IMAGEN -->
+            <div class="image">
+              <label for="image">Elije una imagen:</label>
+              <input
+                type="file"
+                id="file"
+                ref="file"
+                accept="image/png, image/jpg"
+                v-on:change="handleFileUpload()"
+              />
+            </div>
+          </div>
+          <div class="button">
+            <button @click="uploadEvent()">Crear</button>
           </div>
         </div>
-        <!-- TIME-DIFICULTY -->
-        <div>
-          <div>
-            <h4>TIEMPO</h4>
-            <!-- TIEMPO -->
-            <select v-model="time">
-              <option>10</option>
-              <option>20</option>
-              <option>30</option>
-              <option>40</option>
-              <option>50</option>
-              <option>60</option>
-            </select>
-            <br />
-          </div>
-        </div>
-        <!-- SUBIR IMAGEN -->
-        <div>
-          <label for="image">Elije una imagen:</label>
-          <input
-            type="file"
-            id="file"
-            ref="file"
-            accept="image/png, image/jpg"
-            v-on:change="handleFileUpload()"
-          />
-        </div>
-      </div>
-      <div>
-        <button @click="uploadEvent()">Crear</button>
-        <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
       </div>
     </div>
     <!-- Footer-->
@@ -179,7 +185,89 @@ export default {
 </script>
 
 <style scoped>
+.input {
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #333333;
+  background: #ffffff;
+  border: 1px solid #000000;
+  width: 150px;
+  height: 30px;
+  align-items: center;
+  text-align: center;
+}
 .pad {
   padding: 10rem;
+  background-image: url(../assets/fondo.jpg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.capa {
+  background: rgb(255, 255, 255);
+  border-radius: 5%;
+  box-shadow: 4px 3px 15px rgb(238, 164, 130);
+}
+.primero {
+  width: 50%;
+  background: rgb(238, 164, 130);
+  box-shadow: 4px 3px 15px #7dc965;
+}
+.title {
+  padding: 1.5rem;
+  margin-bottom: auto;
+}
+.dificultad h4 {
+  letter-spacing: 3px;
+  margin: 20px auto 40px auto;
+  border: 1px solid #d9d9d9;
+  height: 30px;
+  overflow: hidden;
+  width: 230px;
+  position: relative;
+}
+.tiempo h4 {
+  letter-spacing: 3px;
+  height: 25px;
+  overflow: hidden;
+  position: relative;
+}
+.caja {
+  margin: 20px auto 40px auto;
+  border: 1px solid #d9d9d9;
+  height: 30px;
+  overflow: hidden;
+  width: 230px;
+  display: flex;
+  align-items: center;
+}
+.caja::after {
+  content: "\025be";
+  display: table-cell;
+  padding-top: 7px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  background-color: #d9d9d9;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  pointer-events: none;
+}
+.dificultad select {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  height: 80px;
+  padding: 5px;
+  width: 250px;
+}
+select:focus {
+  outline: none;
+}
+.image {
+  padding-bottom: 25px;
+}
+.button {
+  padding-bottom: 102px;
 }
 </style>

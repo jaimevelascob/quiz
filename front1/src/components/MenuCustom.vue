@@ -5,19 +5,19 @@
       <nav class="links">
         <ul>
           <li>
-            <router-link to="/CreateChallenge">Crear reto</router-link>|
+            <router-link to="/CreateChallenge">Crear reto</router-link>
           </li>
           <li>
-            <router-link to="/challenges">Lista De Retos</router-link>|
+            <router-link to="/challenges">Lista De Retos</router-link>
           </li>
           <li>
-            <router-link id="link" :to="{ name: 'Profile', params:{ id: this.userID }}">Mi perfil</router-link>|
+            <router-link id="link" :to="{ name: 'Profile', params:{ id: this.userID }}">Mi perfil</router-link>
           </li>
           <li>
-            <router-link to="/instrucciones">Instrucciones</router-link>|
+            <router-link to="/instrucciones">Instrucciones</router-link>
           </li>
           <li>
-            <router-link to="/about">About</router-link>|
+            <router-link to="/about">About</router-link>
           </li>
         </ul>
       </nav>
@@ -97,7 +97,7 @@ export default {
 .log {
   text-decoration: none;
   float: left;
-  background: rgb(123, 173, 73);
+  background: rgb(73, 173, 90);
   margin: auto;
   width: 3.5rem;
   height: 3.5rem;
@@ -120,7 +120,7 @@ nav ul {
 
 nav ul li {
   display: inline-block;
-  line-height: 80px;
+  line-height: 70px;
 }
 
 nav ul li a {

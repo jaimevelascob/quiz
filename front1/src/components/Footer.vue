@@ -21,7 +21,7 @@ export default {
   color: white;
   text-align: center;
   padding: 20px;
-  margin-top: 40px;
+  margin-top: 5px;
 }
 .footer p {
   margin: 0;
