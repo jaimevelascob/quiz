@@ -29,6 +29,7 @@
             v-show="modal"
             :to="{ name: 'ChallengeQuestions', params: { id: challenge.id } }"
           >Añadir Preguntas</router-link>
+          <button @click="deleteChallengeEvent(index)">DELETE</button>
         </div>
         <!-- /ROUTER LINKS-->
       </div>
@@ -50,9 +51,6 @@ export default {
     challenges: Array
   },
   methods: {
-    listen() {
-      return this.charAt(0).toUpperCase() + this.slice(1);
-    },
     // MIRAR SI EL ID ES EL MISMO QUE EL USER_ID
     // ESCONDER BOTON AÑADIR PREGUNTAS
     getUserName() {
@@ -61,6 +59,11 @@ export default {
       } else {
         this.modal = false;
       }
+    },
+    // ELIMINAR CHALLENGE
+    deleteChallengeEvent(index) {
+      let data = this.challenges[index].id;
+      this.$emit("delete", data);
     },
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR

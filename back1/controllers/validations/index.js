@@ -116,10 +116,7 @@ const questionSchema = Joi.object().keys({
   solution: Joi.string()
     .max(1)
     .error(generateError("El nombre real no puede pasar de 1 caracteres", 400)),
-  time: Joi.string()
-    .max(75)
-    .error(generateError("El tiempo no puede pasar de 2 caracteres", 400)),
-  user_id: Joi.string().max(75).error(generateError("elige", 400)),
+  user_id: Joi.string().max(75).error(generateError("User id", 400)),
   title: Joi.string()
     .max(75)
     .error(generateError("El title no puede pasar de 2 caracteres", 400)),

@@ -96,7 +96,6 @@ async function challengeQuestions(req, res, next) {
       answerD,
       answerC,
       solution,
-      time,
       user_id,
       challenge_id,
     } = req.body;
@@ -125,7 +124,7 @@ async function challengeQuestions(req, res, next) {
     console.log(text);
     const date = formatDateToDB(new Date());
     await connection.query(
-      "INSERT INTO challenge_questions(id, user_id, challenge_id, title, text, answerA, answerB, answerC, answerD, solution, time, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+      "INSERT INTO challenge_questions(id, user_id, challenge_id, title, text, answerA, answerB, answerC, answerD, solution, date) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
       [
         id,
         user_id,
@@ -137,7 +136,6 @@ async function challengeQuestions(req, res, next) {
         answerD,
         answerC,
         solution,
-        time,
         date,
       ]
     );
@@ -154,7 +152,6 @@ async function challengeQuestions(req, res, next) {
       answerC,
       answerD,
       solution,
-      time,
       date: date,
     });
   } catch (error) {
@@ -352,7 +349,7 @@ async function editChallengeQuestions(req, res, next) {
 async function challengeAnswers(req, res, next) {
   try {
     const { id } = req.params;
-    const { answer, challenge_questions_id } = req.body;
+    const { answer, challenge_id } = req.body;
     const connection = await getConnection();
     const [
       result,
@@ -361,13 +358,13 @@ async function challengeAnswers(req, res, next) {
     ]);
     console.log(result[0]);
     await connection.query(
-      "INSERT INTO challenge_answers(id, challenge_questions_id, answer) VALUES (?,?,?)",
-      [id, answer]
+      "INSERT INTO challenge_answers(id, answer, challenge_id) VALUES (?,?,?)",
+      [id, answer, challenge_id]
     );
     res.send({
       status: "ok",
       id: id,
-      challenge_questions_id: challenge_questions_id,
+      challenge_id: challenge_id,
       respuestas: answer,
     });
   } catch (error) {
@@ -505,8 +502,8 @@ async function deleteChallenge(req, res, next) {
     const { id } = req.params;
     const [
       [title],
-    ] = await connection.query("SELECT title from challenge WHERE id=?", [id]);
-    const formatedMail = "DELETED: " + title.title;
+    ] = await connection.query("SELECT id from challenge WHERE id=?", [id]);
+    const formatedMail = "DELETED: " + title.id;
     console.log(formatedMail);
     await connection.query("UPDATE challenge SET hidden=1 WHERE id=?", [id]);
 
@@ -525,10 +522,11 @@ async function listChallengeQuestionsID(req, res, next) {
   try {
     console.log("hola");
     const connection = await getConnection();
+    const { id } = req.params;
     console.log("hola");
-    const [result] = await connection.query(
-      "SELECT * from challenge_questions"
-    );
+    const [
+      result,
+    ] = await connection.query("SELECT * from challenge WHERE title=?", [id]);
     console.log("hola");
     res.send({
       status: "ok",

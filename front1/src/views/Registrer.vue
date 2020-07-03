@@ -99,7 +99,7 @@ export default {
     emptyFields() {
       (this.email = ""), (this.password = ""), (this.nickName = "");
       //MENSAJE SWAL
-      this.$router.push("/login");
+      this.$router.push("/");
     }
   }
 };

@@ -7,26 +7,13 @@
     <!-- /MENU-->
 
     <div>
-      <div>
+      <div class="preguntas">
         <p class="color1" v-show="required">Tienes datos sin completar</p>
-        <p class="color2" v-show="match">Las contraseñas no coinciden</p>
-        <div v-show="modal">
-          <input type="text" id="title" v-model="time = this.challenges[0].time" />
-        </div>
-        <div v-show="modal">
-          <input type="text" id="title" v-model="title = this.challenges[0].title" />
-        </div>
-        <div v-show="modal">
-          <input type="text" id="title" v-model="challenge_id = this.challenges[0].id" />
-        </div>
-        <div v-show="modal">
-          <input type="text" id="times" v-model=" user_id = this.userID" />
-        </div>
         <div>
           <input type="text" name="text" v-model="text" placeholder="Pregunta..." />
         </div>
         <!-- PREGUNTA A-->
-        <div>
+        <div class="preguntaA">
           <ul>
             <li>
               <input type="answer" name="answer" v-model="answerA" placeholder="Question A..." />
@@ -37,7 +24,7 @@
           </ul>
         </div>
         <!-- PREGUNTA B-->
-        <div>
+        <div class="preguntaB">
           <ul>
             <input type="answer" name="answer" v-model="answerB" placeholder="Question B..." />
             <li>
@@ -46,7 +33,7 @@
           </ul>
         </div>
         <!-- PREGUNTA C-->
-        <div>
+        <div class="preguntaC">
           <ul>
             <input type="answer" name="answer" v-model="answerC" placeholder="Question C..." />
             <li>
@@ -55,7 +42,7 @@
           </ul>
         </div>
         <!-- PREGUNTA D-->
-        <div>
+        <div class="preguntaD">
           <ul>
             <input type="answer" name="answer" v-model="answerD" placeholder="Question D..." />
           </ul>
@@ -76,8 +63,6 @@
           <br />
           <input @click="pulse()" type="radio" id="d" value="D" v-model="solution" />
           <label for="D">D</label>
-          <br />
-          <span>Eligió: {{ solution }}</span>
           <br />
         </div>
       </div>
@@ -116,8 +101,6 @@ export default {
       answerD: "",
       correctData: false,
       required: false,
-      match: false,
-      time: "",
       file: "",
       solution: "",
       modal: "",
@@ -142,20 +125,15 @@ export default {
     //COMPROBAR QUE LOS DATOS NO ESTÁN VACIOS
     validatingData() {
       if (
-        this.time === "" ||
         this.text === "" ||
         this.answerA === "" ||
         this.answerB === "" ||
         this.answerD === "" ||
-        this.answerC === "" ||
-        this.solution === ""
+        this.answerC === ""
       ) {
         this.correctData = false;
         this.required = true;
         // SI LA PASS NO ES =
-      } else if (this.password != this.repeatpassword) {
-        this.match = true;
-        // SI LA PASS ES =
       } else {
         this.correctData = true;
         this.required = false;
@@ -169,16 +147,15 @@ export default {
         try {
           const photoFormData = new FormData();
           // dict of all elements
-          photoFormData.append("title", this.title);
+          photoFormData.append("title", this.challenges[0].title);
           photoFormData.append("text", this.text);
           photoFormData.append("answerA", this.answerA);
           photoFormData.append("answerB", this.answerB);
           photoFormData.append("answerC", this.answerC);
           photoFormData.append("answerD", this.answerD);
-          photoFormData.append("time", this.time);
           photoFormData.append("solution", this.solution);
-          photoFormData.append("user_id", this.user_id);
-          photoFormData.append("challenge_id", this.challenge_id);
+          photoFormData.append("user_id", this.userID);
+          photoFormData.append("challenge_id", this.challenges[0].id);
           if (this.file.length) {
             photoFormData.append("photo", this.file);
           }
@@ -199,8 +176,6 @@ export default {
     // CONSEGUIR ANSWER
     async getChallenge() {
       let self = this;
-      let data = localStorage.getItem("title", this.title);
-      console.log(data);
       await axios
         .get("http://localhost:3000/challenge/" + self.$route.params.id)
         .then(function(response) {
@@ -222,7 +197,6 @@ export default {
         (this.answerB = ""),
         (this.answerC = ""),
         (this.answerD = ""),
-        (this.time = ""),
         (this.text = "");
       //MENSAJE SWAL
       this.$router.push("/challenges");
@@ -269,4 +243,7 @@ export default {
 </script>
 
 <style scoped>
+.preguntas {
+  padding: 8rem;
+}
 </style>

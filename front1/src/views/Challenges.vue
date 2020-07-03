@@ -41,7 +41,7 @@
     </div>
     <!-- COMPONENTE MEETINGS -->
     <div class="awtestimonials">
-      <challengelist :challenges="challenges"></challengelist>
+      <challengelist :challenges="challenges" v-on:delete="deleteChallenge"></challengelist>
     </div>
     <div class="pagination">
       <!-- <i id="prev" class="awarrow awarrowleft" @click="AnswerChange()">a</i>
@@ -109,15 +109,25 @@ export default {
           console.log(error);
         });
     },
-
+    // ELIMINAR CHALLENGE
+    deleteChallenge(data) {
+      let self = this;
+      this.id = data;
+      axios
+        .delete("http://localhost:3000/challenge/" + this.id, {
+          id: this.id
+        })
+        .then(function(response) {
+          console.log(response);
+          location.reload();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     clearInput() {
       (this.search = ""), (this.filter = "");
       this.getChallenge();
-    },
-    next() {
-      if (this.challenges.length < 4) {
-      } else {
-      }
     }
   },
   watch: {
@@ -149,8 +159,7 @@ button {
   width: 10%;
 }
 .awtestimonials {
-  max-width: 500%;
-  position: hidden;
+  padding: 5rem;
 }
 .awarrow {
   position: absolute;

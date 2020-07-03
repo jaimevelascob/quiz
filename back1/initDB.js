@@ -62,7 +62,6 @@ async function main() {
         answerC VARCHAR(500) NOT NULL,
         answerD VARCHAR(500) NOT NULL,
         solution VARCHAR(1) ,
-        time VARCHAR(2),
         user_id INTEGER,
         challenge_id INTEGER,
         date datetime not null,
@@ -87,8 +86,8 @@ async function main() {
     await connection.query(`CREATE TABLE IF NOT EXISTS challenge_answers(
         id INTEGER PRIMARY KEY AUTO_INCREMENT,
         answer VARCHAR(255),      
-        challenge_questions_id INTEGER,
-        CONSTRAINT fk_entry_questions FOREIGN KEY (challenge_questions_id) REFERENCES challenge_questions(id) ON DELETE SET NULL
+        challenge_id INTEGER,
+        CONSTRAINT fk_answer_challenge FOREIGN KEY (challenge_id) REFERENCES challenge(id) ON DELETE SET NULL
           );`);
     console.log("prueba4");
     // user_answers ❗️

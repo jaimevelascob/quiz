@@ -6,7 +6,7 @@
     </div>
     <!-- /MENU-->
 
-    <div>
+    <div class="pad">
       <div>
         <p class="color1" v-show="required">Tienes datos sin completar</p>
         <p class="color2" v-show="match">Las contraseñas no coinciden</p>
@@ -25,9 +25,9 @@
           <div>
             <h4>DIFICULTAD</h4>
             <select v-model="difficulty" multiple>
-              <option value="1">facil</option>
-              <option value="2">medio</option>
-              <option value="3">dificl</option>
+              <option value="facil">facil</option>
+              <option value="medio">medio</option>
+              <option value="dificl">dificl</option>
             </select>
             <br />
           </div>
@@ -65,6 +65,10 @@
         <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
       </div>
     </div>
+    <!-- Footer-->
+    <div>
+      <Footer></Footer>
+    </div>
   </div>
 </template>
 
@@ -74,11 +78,13 @@ import axios from "axios"; // Importando AXIOS
 import Swal from "sweetalert2";
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
+// IMPORTANDO Footer
+import Footer from "@/components/Footer.vue";
 // Importando funcion addChallenge
 import { addChallenge } from "../api/utils";
 export default {
   name: "ChallengeQuestions",
-  components: { Menu },
+  components: { Menu, Footer },
   data() {
     return {
       title: "",
@@ -87,7 +93,7 @@ export default {
       required: false,
       match: false,
       file: "",
-      difficulty: "",
+      difficulty: [],
       modal: "",
       time: ""
     };
@@ -173,4 +179,7 @@ export default {
 </script>
 
 <style scoped>
+.pad {
+  padding: 10rem;
+}
 </style>

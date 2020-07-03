@@ -1,21 +1,32 @@
 <template>
   <div class="capauno">
     <div v-show="pulsarboton">
+      <Menu></Menu>
+    </div>
+    <div class="aceptar" v-show="pulsarboton">
       <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
       <button @click="settime()" value="inicio">INCIAR</button>
     </div>
     <div v-show="capsula" class="awtestimonials">
-      <div>
-        <li id="times" v-model="challenges[q].time">{{ challenges[q].time }}</li>
+      <div class="cronometro">
+        <div class="time">
+          <img class="img" src="https://image.flaticon.com/icons/svg/66/66175.svg" alt="cronometro" />
+          <p class="timing" id="times" v-model="questionTime">{{ this.questionTime[0].time }}</p>
+        </div>
       </div>
       <ul class="roc">
         <li>
           <div id="awuserdata">
             <div>
-              <li>{{ challenges[q].text }}</li>
+              <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
             </div>
+
+            <li>
+              <h1>{{ challenges[q].text }}</h1>
+            </li>
+
             <!-- CHALLENGE RESPUESTAS -->
-            <div>
+            <div class="respuestas">
               <li>
                 <p>{{ challenges[q].answerA }}</p>
                 <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
@@ -36,14 +47,15 @@
                 <input @click="pulse()" type="radio" id="d" value="D" v-model="answer" />
                 <label for="D">D</label>
               </li>
-              <li>
+
+              <!-- <li>
                 <p>solucion: {{ challenges[q].solution }}</p>
-              </li>
+              </li>-->
             </div>
             <!-- /CHALLENGE RESPUESTAS -->
             <!-- BOTTON NEXT -->
             <div>
-              <button @click="nextAnswers()">Siguiente</button>
+              <button v-show="next" @click="nextAnswers()">Siguiente</button>
             </div>
             <!-- /BOTTON NEXT -->
             <!-- BOTTON POSTEAR -->
@@ -65,21 +77,28 @@
 <script>
 import axios from "axios"; // Importando AXIOS
 //IMPORTANDO SWEETALERT
+// IMPORTANDO MENU
+import Menu from "@/components/MenuCustom.vue";
 import Swal from "sweetalert2";
 import { shuffle } from "lodash";
 export default {
   name: "Challenge",
+  components: { Menu },
   props: ["id"],
   data() {
     return {
       challenges: {},
-      time: 1,
+      questionTime: {},
       q: 0,
       answer: "",
       correctData: false,
       challenge_questions_id: "",
       modal: "",
-      pulsarboton: true
+      capsula: "",
+      pulsarboton: true,
+      ultimapregunta: "",
+      next: true,
+      challenge_questions_id: ""
     };
   },
   methods: {
@@ -120,20 +139,17 @@ export default {
           }
         });
     },
-    // POSTEAR ANSWER
-    async postAnswers(answer) {
+
+    // CONSEGUIR ANSWER-TIME
+    async getAnswerTime() {
       let self = this;
       await axios
-        .post(
-          "http://localhost:3000/challenge/answers/" + self.$route.params.id
+        .get(
+          "http://localhost:3000/challengelistquestions/" +
+            self.$route.params.id
         )
         .then(function(response) {
-          answer = self.answer;
-          Swal.fire({
-            icon: "success",
-            title: "Has acabado el challenge!",
-            text: "Se guardarán tus datos"
-          });
+          self.questionTime = response.data.data;
         })
         .catch(function(error) {
           if (error.response) {
@@ -141,7 +157,44 @@ export default {
           }
         });
     },
-
+    // POSTEAR ANSWER
+    async postAnswers() {
+      if (
+        this.answer == "A" ||
+        this.answer == "B" ||
+        this.answer == "C" ||
+        (this.answer == "D" && this.answer == this.challenges[this.q].solution)
+      ) {
+        let self = this;
+        axios
+          .post("http://localhost:3000/challenge/answers", {
+            answer: self.q,
+            challenge: this.questionTime[0].id
+          })
+          .then(function(response) {
+            console.log(response);
+            self.emptyFields();
+          })
+          .catch(function(error) {
+            if (error.response) {
+              alert(error.response.data.message);
+            }
+          });
+      }
+    },
+    // vaciar
+    emptyFields() {
+      this.q = 0;
+      Swal.fire({
+        icon: "success",
+        title: "has acabado el reto",
+        text: "Gracias",
+        confirmButtonText: "Ok"
+      });
+      setTimeout(function() {
+        location.reload();
+      }, 1500);
+    },
     settime() {
       this.capsula = true;
       this.pulsarboton = false;
@@ -150,16 +203,16 @@ export default {
 
     crono() {
       // SI LLEGA A 0
-      if (this.challenges[this.q].time == 0) {
-        this.time = "end";
+      if (this.questionTime[0].time == 0) {
         Swal.fire({
           icon: "error",
           title: "U LOSE MAY FRIEND",
           text: "OTRA VEZ SERA 😈"
         });
+        reload();
         // SI ES MAYOR QUE 0
       } else {
-        this.challenges[this.q].time = this.challenges[this.q].time - 1;
+        this.questionTime[0].time = this.questionTime[0].time - 1;
         setTimeout(this.crono, 1000);
       }
     },
@@ -176,25 +229,32 @@ export default {
         this.answer == "B" ||
         this.answer == "C" ||
         this.answer == "D"
-      ) {
+      )
         return this.answer;
-      } else {
-        alert(error.response.data.message);
-      }
     },
     // BUSCAR LA SOLUCION = array = 0 o > 1;
     nextAnswers() {
       if (this.q == 0 && this.answer != this.challenges[this.q].solution) {
         this.answer = "";
+        this.next = true;
       } else if (
         this.q > 0 &&
         this.answer != this.challenges[this.q].solution
       ) {
         this.answer = "";
         this.q--;
+        this.next = true;
       } else {
-        this.q++;
-        this.answer = "";
+        if (this.q != this.challenges.length - 2) {
+          this.q++;
+          this.answer = "";
+          this.next = true;
+        } else {
+          this.q++;
+          this.ultimapregunta = true;
+          this.answer = "";
+          this.next = false;
+        }
       }
     }
   },
@@ -202,20 +262,40 @@ export default {
   created() {
     this.getAnswers();
     this.getUserName();
+    this.getAnswerTime();
   }
 };
 </script>
 
 <style scoped>
-.capauno {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+.aceptar {
+  padding: 4rem;
 }
-.awtestimonials {
-  max-width: 500%;
+.ult {
+  color: rebeccapurple;
+}
+.time {
+  display: inline-block;
+  align-items: center;
+  justify-content: start;
   position: relative;
 }
+.cronometro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timing {
+  font-size: 2.2rem;
+  position: absolute;
+  bottom: 0;
+  top: 2rem;
+  right: 3.7rem;
+}
+.img {
+  width: 10rem;
+}
+
 .roc {
   display: flex;
   padding: 0%;
@@ -233,33 +313,5 @@ export default {
   display: block;
   margin: 15px 0;
   font-size: 35px;
-}
-.awarrow {
-  position: absolute;
-  top: 50%;
-  display: inline-block;
-  border: solid #eee;
-  padding: 20px;
-  border-width: 0 3px 3px 0;
-  cursor: pointer;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
-}
-.awarrow.awarrowleft {
-  right: 200px;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-.awarrow.awarrowright {
-  left: 200px;
-  -webkit-transform: rotate(135deg);
-  transform: rotate(135deg);
-}
-.awarrow:hover {
-  border-color: #dca453;
-  box-shadow: 4px 3px 15px #a8fa8f;
-}
-.awuserdata {
-  display: block;
 }
 </style>
