@@ -89,40 +89,40 @@ const editUserSchema = Joi.object().keys({
 // Anwers
 const questionSchema = Joi.object().keys({
   answerA: Joi.string()
-    .max(255)
+    .max(100)
     .error(
-      generateError("La respuesta A no puede pasar de 255 caracteres", 400)
+      generateError("La respuesta A no puede pasar de 100 caracteres", 400)
     ),
   answerB: Joi.string()
-    .max(255)
+    .max(100)
     .error(
-      generateError("La respuesta B no puede pasar de 255 caracteres", 400)
+      generateError("La respuesta B no puede pasar de 100 caracteres", 400)
     ),
   answerC: Joi.string()
-    .max(255)
+    .max(100)
     .error(
-      generateError("La respuesta C no puede pasar de 255 caracteres", 400)
+      generateError("La respuesta C no puede pasar de 100 caracteres", 400)
     ),
   answerD: Joi.string()
-    .max(255)
+    .max(100)
     .error(
-      generateError("La respuesta D no puede pasar de 255 caracteres", 400)
+      generateError("La respuesta D no puede pasar de 100 caracteres", 400)
     ),
   text: Joi.string()
-    .max(75)
-    .error(
-      generateError("El nombre real no puede pasar de 75 caracteres", 400)
-    ),
+    .max(100)
+    .error(generateError("La pregunta no puede pasar de 100 caracteres", 400)),
   solution: Joi.string()
     .max(1)
-    .error(generateError("El nombre real no puede pasar de 1 caracteres", 400)),
+    .error(generateError("La solucion no puede pasar de 1 caracteres", 400)),
   user_id: Joi.string().max(75).error(generateError("User id", 400)),
   title: Joi.string()
     .max(75)
     .error(generateError("El title no puede pasar de 2 caracteres", 400)),
   challenge_id: Joi.string()
     .max(75)
-    .error(generateError("El tiempo no puede pasar de 2 caracteres", 400)),
+    .error(
+      generateError("El challenge_id no puede pasar de 2 caracteres", 400)
+    ),
 });
 
 // CREATE CHALLENGE

@@ -10,8 +10,6 @@
       <div class="primero">
         <div class="capa">
           <div class="title">
-            <p class="color1" v-show="required">Tienes datos sin completar</p>
-            <p class="color2" v-show="match">Las contraseñas no coinciden</p>
             <div v-show="modal">
               <input type="text" id="times" v-model=" user_id = this.userID" />
             </div>
@@ -30,10 +28,10 @@
             <div class="dificultad">
               <!-- DIFICULTAD -->
               <h4>DIFICULTAD</h4>
-              <select v-model="difficulty" multiple>
-                <option value="facil">facil</option>
+              <select class="dif" v-model="difficulty" multiple>
+                <option value="facil">fácil</option>
                 <option value="medio">medio</option>
-                <option value="dificl">dificl</option>
+                <option value="dificil">difícil</option>
               </select>
               <br />
             </div>
@@ -67,6 +65,7 @@
           </div>
           <div class="button">
             <button @click="uploadEvent()">Crear</button>
+            <p class="color1" v-show="required">Tienes datos sin completar</p>
           </div>
         </div>
       </div>
@@ -147,8 +146,6 @@ export default {
             photoFormData.append("photo", this.file);
             console.log(this.file);
           }
-          //GUARDAR EL TITLE/TIME EN LOCALSTORAGE
-          localStorage.setItem("title", this.title);
           await addChallenge(photoFormData);
           Swal.fire({
             icon: "success",
@@ -253,14 +250,19 @@ export default {
   right: 0px;
   pointer-events: none;
 }
+
 .dificultad select {
-  background: transparent;
-  border: none;
+  letter-spacing: 2.5px;
+  text-align: center;
+  background: #edf1e0;
+  border: 1px solid #d9d9d9;
   font-size: 14px;
   height: 80px;
   padding: 5px;
   width: 250px;
+  box-shadow: 1px 1px 2px #333333;
 }
+
 select:focus {
   outline: none;
 }
@@ -269,5 +271,22 @@ select:focus {
 }
 .button {
   padding-bottom: 102px;
+}
+.color1 {
+  color: rgb(51, 150, 5);
+  -webkit-animation: pulsate 3s ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0.3;
+}
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.9;
+  }
 }
 </style>

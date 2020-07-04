@@ -68,7 +68,7 @@ export default {
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR
     UserLog() {
-      if (localStorage.getItem("authToken") && !localStorage.getItem("title")) {
+      if (localStorage.getItem("authToken")) {
         this.nomodal = true;
       } else {
         this.nomodal = false;

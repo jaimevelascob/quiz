@@ -9,9 +9,20 @@
     </div>
     <div v-show="capsula" class="awtestimonials">
       <div class="cronometro">
-        <div class="time">
-          <img class="img" src="https://image.flaticon.com/icons/svg/66/66175.svg" alt="cronometro" />
-          <p class="timing" id="times" v-model="questionTime">{{ this.questionTime[0].time }}</p>
+        <div class="timo">
+          <div class="time">
+            <img
+              class="img"
+              src="https://image.flaticon.com/icons/svg/66/66175.svg"
+              alt="cronometro"
+            />
+            <p class="timing" id="times" v-model="questionTime">{{ this.questionTime[0].time }}</p>
+            <div>
+              <img class="pause" src="../assets/ulti.png" alt />
+              <button class="buttoncito" @click="pausa()">Pausar</button>
+              <p class="timingad" value>ultimate disponible</p>
+            </div>
+          </div>
         </div>
       </div>
       <ul class="roc">
@@ -60,13 +71,9 @@
             <!-- /BOTTON NEXT -->
             <!-- BOTTON POSTEAR -->
             <div>
-              <button @click="postAnswers()">Terminar</button>
+              <button v-show="finish" @click="postAnswers()">Terminar</button>
             </div>
             <!-- /BOTTON POSTEAR -->
-            <!-- CHALLENGE QUESTIONS -->
-            <div v-show="modal">
-              <input type="text" id="title" v-model="challenge_questions_id = challenges[q].id" />
-            </div>
           </div>
         </li>
       </ul>
@@ -98,7 +105,9 @@ export default {
       pulsarboton: true,
       ultimapregunta: "",
       next: true,
-      challenge_questions_id: ""
+      challenge_questions_id: "",
+      finish: false,
+      pausaDis: 1
     };
   },
   methods: {
@@ -160,16 +169,14 @@ export default {
     // POSTEAR ANSWER
     async postAnswers() {
       if (
-        this.answer == "A" ||
-        this.answer == "B" ||
-        this.answer == "C" ||
-        (this.answer == "D" && this.answer == this.challenges[this.q].solution)
+        this.answer != "" &&
+        this.answer == this.challenges[this.q].solution
       ) {
         let self = this;
         axios
           .post("http://localhost:3000/challenge/answers", {
             answer: self.q,
-            challenge: this.questionTime[0].id
+            challenge_id: this.questionTime[0].id
           })
           .then(function(response) {
             console.log(response);
@@ -180,6 +187,10 @@ export default {
               alert(error.response.data.message);
             }
           });
+      } else {
+        this.q--;
+        this.answer = "";
+        this.next = true;
       }
     },
     // vaciar
@@ -209,7 +220,7 @@ export default {
           title: "U LOSE MAY FRIEND",
           text: "OTRA VEZ SERA 😈"
         });
-        reload();
+        location.reload();
         // SI ES MAYOR QUE 0
       } else {
         this.questionTime[0].time = this.questionTime[0].time - 1;
@@ -218,9 +229,6 @@ export default {
     },
     bottonFijar() {
       this.pulse();
-      // this.validatingData();
-
-      // alert(this.answer);
     },
 
     pulse() {
@@ -254,7 +262,16 @@ export default {
           this.ultimapregunta = true;
           this.answer = "";
           this.next = false;
+          this.finish = true;
         }
+      }
+    },
+    pausa() {
+      if (this.pausaDis == 1) {
+        this.questionTime[0].time = this.questionTime[0].time + 10;
+        this.pausaDis--;
+      } else {
+        this.pausaDis = 0;
       }
     }
   },
@@ -274,23 +291,37 @@ export default {
 .ult {
   color: rebeccapurple;
 }
+
 .time {
-  display: inline-block;
-  align-items: center;
-  justify-content: start;
+  width: 500px;
+  background: chocolate;
+  display: flex;
   position: relative;
 }
-.cronometro {
+.timo {
+  width: 100;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+.cronometro {
+  display: block;
+  flex-direction: column;
+  align-items: center;
 }
 .timing {
   font-size: 2.2rem;
   position: absolute;
   bottom: 0;
   top: 2rem;
-  right: 3.7rem;
+  right: 25rem;
+}
+.timingad {
+  font-size: 2.2rem;
+  position: absolute;
+  bottom: 0;
+  top: 2rem;
+  left: 35rem;
 }
 .img {
   width: 10rem;
@@ -313,5 +344,15 @@ export default {
   display: block;
   margin: 15px 0;
   font-size: 35px;
+}
+/* pausa */
+.pause {
+  text-decoration: none;
+  float: left;
+  margin: auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: solid 2px #fff;
+  border-radius: 10%;
 }
 </style>
