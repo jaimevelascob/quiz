@@ -6,9 +6,16 @@
     </div>
     <!-- /MENU -->
     <!-- ACEPTAR BUTTON -->
+
     <div class="aceptar" v-show="pulsarboton">
-      <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
-      <button @click="settime()" value="inicio">INCIAR</button>
+      <div class="rep">
+        <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
+        <button class="inicioButton" @click="settime()" value="inicio">INCIAR</button>
+      </div>
+      <!-- Footer-->
+    </div>
+    <div class="ruu">
+      <Footer></Footer>
     </div>
     <!-- /ACEPTAR BUTTON -->
     <div v-show="capsula" class="awtestimonials">
@@ -53,7 +60,7 @@
             <p>{{ challenges[q].answerA }}</p>
             <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
           </li>
-          <li>
+          <li class="lisegunda">
             <p>{{ challenges[q].answerB }}</p>
             <input type="radio" id="a" value="B" v-model="answer" @click="bottonFijar()" />
           </li>
@@ -62,11 +69,11 @@
         <div class="segundapregunta">
           <div id="awuserdata">
             <div class="respuestas">
-              <li>
+              <li class="litercera">
                 <p>{{ challenges[q].answerC }}</p>
                 <input @click="pulse()" type="radio" id="a" value="C" v-model="answer" />
               </li>
-              <li>
+              <li class="licuarta">
                 <p>{{ challenges[q].answerD }}</p>
                 <input @click="pulse()" type="radio" id="a" value="D" v-model="answer" />
               </li>
@@ -87,10 +94,7 @@
       </div>
       <!-- /BOTTON POSTEAR -->
       <div class="footer">
-        <p>
-          &copy; 2020
-          <a href="http://FranciscoAMK.com">Log&Quiz</a>
-        </p>
+        <p></p>
       </div>
     </div>
   </div>
@@ -102,12 +106,12 @@ import axios from "axios"; // Importando AXIOS
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
 // IMPORTANDO Footer
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/FooterDos.vue";
 import Swal from "sweetalert2";
 import { shuffle } from "lodash";
 export default {
   name: "Challenge",
-  components: { Menu },
+  components: { Menu, Footer },
   props: ["id"],
   data() {
     return {
@@ -241,21 +245,21 @@ export default {
       }
     },
 
-    crono() {
-      // SI LLEGA A 0
-      if (this.questionTime[0].time == 0) {
-        Swal.fire({
-          icon: "error",
-          title: "U LOSE MAY FRIEND",
-          text: "OTRA VEZ SERA 😈"
-        });
-        location.reload();
-        // SI ES MAYOR QUE 0
-      } else {
-        this.questionTime[0].time = this.questionTime[0].time - 1;
-        setTimeout(this.crono, 1000);
-      }
-    },
+    // crono() {
+    //   // SI LLEGA A 0
+    //   if (this.questionTime[0].time == 0) {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "U LOSE MAY FRIEND",
+    //       text: "OTRA VEZ SERA 😈"
+    //     });
+    //     location.reload();
+    //     // SI ES MAYOR QUE 0
+    //   } else {
+    //     this.questionTime[0].time = this.questionTime[0].time - 1;
+    //     setTimeout(this.crono, 1000);
+    //   }
+    // },
     bottonFijar() {
       this.pulse();
     },
@@ -316,8 +320,47 @@ export default {
 </script>
 
 <style scoped>
+/* inicio */
+.inicioButton {
+  margin-top: 25px;
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(224, 73, 73, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
+}
+.inicioButton:hover {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.6rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
 .aceptar {
-  padding: 4rem;
+  background-image: url(../assets/fondo3.jpg);
+}
+.rep {
+  background: rgb(255, 255, 255);
+  padding-top: 20rem;
+  padding-bottom: 22rem;
+}
+
+.aceptar {
+  padding: 2rem;
 }
 .ult {
   color: rebeccapurple;
@@ -375,6 +418,22 @@ export default {
 /* respuestas */
 .liprimera {
   color: rgb(0, 0, 0);
+  border-top: 10px solid #ced9f0;
+}
+.lisegunda {
+  color: rgb(0, 0, 0);
+  border-bottom: 10px solid #cef0d1;
+  border-top-style: ridge;
+}
+.litercera {
+  color: rgb(0, 0, 0);
+
+  border-top: 10px solid #ddcef0;
+}
+.licuarta {
+  color: rgb(0, 0, 0);
+  border-bottom: 10px solid #eccef0;
+  border-top-style: ridge;
 }
 .pri {
   display: flex;

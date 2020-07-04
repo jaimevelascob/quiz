@@ -53,7 +53,7 @@ import axios from "axios"; // Importando AXIOS
 import Menu from "@/components/MenuCustom.vue";
 import Swal from "sweetalert2";
 // IMPORTANDO Footer
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/FooterDos.vue";
 //IMPORTANDO meetingS
 import challengelist from "@/components/ChallengeList.vue";
 export default {

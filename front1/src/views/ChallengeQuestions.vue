@@ -74,7 +74,7 @@ import Swal from "sweetalert2";
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
 // IMPORTANDO Footer
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/FooterDos.vue";
 // Importando funcion addChallenge
 import { addChallengeQuestion } from "../api/utils";
 //IMPORTANDO meetingS
@@ -256,7 +256,7 @@ export default {
 <style scoped>
 /* card */
 .pad {
-  padding: 9rem;
+  padding: 8.5rem;
   background-image: url(../assets/fondo3.jpg);
   display: flex;
   flex-direction: column;

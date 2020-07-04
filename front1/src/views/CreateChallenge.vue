@@ -84,7 +84,7 @@ import Swal from "sweetalert2";
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
 // IMPORTANDO Footer
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/FooterDos.vue";
 // Importando funcion addChallenge
 import { addChallenge } from "../api/utils";
 export default {
@@ -187,13 +187,13 @@ export default {
   box-shadow: 1px 1px 2px #333333;
   background: #ffffff;
   border: 1px solid #000000;
-  width: 150px;
+  width: 300px;
   height: 30px;
   align-items: center;
   text-align: center;
 }
 .pad {
-  padding: 10rem;
+  padding: 9.5rem;
   background-image: url(../assets/fondo.jpg);
   display: flex;
   flex-direction: column;
@@ -219,7 +219,7 @@ export default {
   border: 1px solid #d9d9d9;
   height: 30px;
   overflow: hidden;
-  width: 230px;
+  width: 300px;
   position: relative;
 }
 .tiempo h4 {
@@ -233,7 +233,7 @@ export default {
   border: 1px solid #d9d9d9;
   height: 30px;
   overflow: hidden;
-  width: 230px;
+  width: 300px;
   display: flex;
   align-items: center;
 }
@@ -259,7 +259,7 @@ export default {
   font-size: 14px;
   height: 80px;
   padding: 5px;
-  width: 250px;
+  width: 300px;
   box-shadow: 1px 1px 2px #333333;
 }
 
