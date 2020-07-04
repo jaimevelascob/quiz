@@ -27,7 +27,7 @@
         <p>{{nombreUsuario}}</p>
 
         <button v-show="nomodal" id="link" class="myButton" @click="loginUser()">Login</button>
-        <button v-show="modal" id="link" class="myButton" @click="logoutUser()">Logout</button>
+        <button v-show="modal" id="link" class="buttonP" @click="logoutUser()">Logout</button>
       </div>
     </div>
   </div>
@@ -132,5 +132,53 @@ nav ul li a {
 
 nav ul li a:hover {
   background: #0b76a6;
+}
+.buttonP {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(117, 202, 195, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 54px;
+  min-height: 24px;
+  position: relative;
+  line-height: 0.875rem;
+  margin: 0px;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
+}
+.myButton {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(117, 202, 195, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 80px;
+  min-height: 40px;
+  position: relative;
+  line-height: 0.875rem;
+  margin: 0px;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
 }
 </style>

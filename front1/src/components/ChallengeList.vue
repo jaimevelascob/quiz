@@ -29,7 +29,6 @@
             v-show="modal"
             :to="{ name: 'ChallengeQuestions', params: { id: challenge.id } }"
           >Añadir Preguntas</router-link>
-          <button @click="deleteChallengeEvent(index)">DELETE</button>
         </div>
         <!-- /ROUTER LINKS-->
       </div>
@@ -59,11 +58,6 @@ export default {
       } else {
         this.modal = false;
       }
-    },
-    // ELIMINAR CHALLENGE
-    deleteChallengeEvent(index) {
-      let data = this.challenges[index].id;
-      this.$emit("delete", data);
     },
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR

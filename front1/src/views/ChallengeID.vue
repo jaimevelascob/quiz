@@ -1,82 +1,97 @@
 <template>
   <div class="capauno">
+    <!-- MENU -->
     <div v-show="pulsarboton">
       <Menu></Menu>
     </div>
+    <!-- /MENU -->
+    <!-- ACEPTAR BUTTON -->
     <div class="aceptar" v-show="pulsarboton">
       <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
       <button @click="settime()" value="inicio">INCIAR</button>
     </div>
+    <!-- /ACEPTAR BUTTON -->
     <div v-show="capsula" class="awtestimonials">
+      <!-- CRONOMETRO -->
       <div class="cronometro">
         <div class="timo">
           <div class="time">
-            <img
-              class="img"
-              src="https://image.flaticon.com/icons/svg/66/66175.svg"
-              alt="cronometro"
-            />
-            <p class="timing" id="times" v-model="questionTime">{{ this.questionTime[0].time }}</p>
-            <div>
-              <img class="pause" src="../assets/ulti.png" alt />
-              <button class="buttoncito" @click="pausa()">Pausar</button>
-              <p class="timingad" value>ultimate disponible</p>
+            <div class="fulltime">
+              <img
+                class="img"
+                src="https://image.flaticon.com/icons/svg/66/66175.svg"
+                alt="cronometro"
+              />
+              <p class="timing" id="times">{{ this.questionTime[0].time }}</p>
+              <!-- ULTIMATE -->
+              <div v-show="ulti" class="ultimate">
+                <img class="pause" src="../assets/cerebro4.jpeg" alt />
+                <button class="buttoncito" @click="pausa()">Pausar</button>
+                <p
+                  :class="{ green: estado=== 'Ultimate disponible', red: estado=== 'Ultimate no disponible'}"
+                >{{estado}}</p>
+              </div>
+            </div>
+            <!-- /ULTIMATE -->
+          </div>
+        </div>
+      </div>
+      <!-- /CRONOMETRO -->
+
+      <div>
+        <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
+      </div>
+      <div class="text">
+        <li>
+          <h1>{{ challenges[q].text }}</h1>
+        </li>
+      </div>
+      <!-- CHALLENGE RESPUESTAS -->
+      <div class="pri">
+        <div class="primerapregunta">
+          <li class="liprimera">
+            <p>{{ challenges[q].answerA }}</p>
+            <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
+          </li>
+          <li>
+            <p>{{ challenges[q].answerB }}</p>
+            <input type="radio" id="a" value="B" v-model="answer" @click="bottonFijar()" />
+          </li>
+        </div>
+
+        <div class="segundapregunta">
+          <div id="awuserdata">
+            <div class="respuestas">
+              <li>
+                <p>{{ challenges[q].answerC }}</p>
+                <input @click="pulse()" type="radio" id="a" value="C" v-model="answer" />
+              </li>
+              <li>
+                <p>{{ challenges[q].answerD }}</p>
+                <input @click="pulse()" type="radio" id="a" value="D" v-model="answer" />
+              </li>
             </div>
           </div>
         </div>
       </div>
-      <ul class="roc">
-        <li>
-          <div id="awuserdata">
-            <div>
-              <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
-            </div>
+      <!-- /CHALLENGE RESPUESTAS -->
 
-            <li>
-              <h1>{{ challenges[q].text }}</h1>
-            </li>
-
-            <!-- CHALLENGE RESPUESTAS -->
-            <div class="respuestas">
-              <li>
-                <p>{{ challenges[q].answerA }}</p>
-                <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
-                <label for="A">A</label>
-              </li>
-              <li>
-                <p>{{ challenges[q].answerB }}</p>
-                <input type="radio" id="b" value="B" v-model="answer" @click="bottonFijar()" />
-                <label for="B">B</label>
-              </li>
-              <li>
-                <p>{{ challenges[q].answerC }}</p>
-                <input @click="pulse()" type="radio" id="c" value="C" v-model="answer" />
-                <label for="C">C</label>
-              </li>
-              <li>
-                <p>{{ challenges[q].answerD }}</p>
-                <input @click="pulse()" type="radio" id="d" value="D" v-model="answer" />
-                <label for="D">D</label>
-              </li>
-
-              <!-- <li>
-                <p>solucion: {{ challenges[q].solution }}</p>
-              </li>-->
-            </div>
-            <!-- /CHALLENGE RESPUESTAS -->
-            <!-- BOTTON NEXT -->
-            <div>
-              <button v-show="next" @click="nextAnswers()">Siguiente</button>
-            </div>
-            <!-- /BOTTON NEXT -->
-            <!-- BOTTON POSTEAR -->
-            <div>
-              <button v-show="finish" @click="postAnswers()">Terminar</button>
-            </div>
-            <!-- /BOTTON POSTEAR -->
-          </div>
-        </li>
-      </ul>
+      <!-- BOTTON NEXT -->
+      <div>
+        <button class="rer" v-show="next" @click="nextAnswers()">Siguiente</button>
+      </div>
+      <!-- /BOTTON NEXT -->
+      <!-- BOTTON POSTEAR -->
+      <div>
+        <button class="rer" v-show="finish" @click="postAnswers()">Terminar</button>
+      </div>
+      <!-- /BOTTON POSTEAR -->
+      <div class="footer">
+        <p>
+          &copy; 2020
+          <a href="http://FranciscoAMK.com">Log&Quiz</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -86,6 +101,8 @@ import axios from "axios"; // Importando AXIOS
 //IMPORTANDO SWEETALERT
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
+// IMPORTANDO Footer
+import Footer from "@/components/Footer.vue";
 import Swal from "sweetalert2";
 import { shuffle } from "lodash";
 export default {
@@ -107,7 +124,9 @@ export default {
       next: true,
       challenge_questions_id: "",
       finish: false,
-      pausaDis: 1
+      pausaDis: 1,
+      estado: "Ultimate disponible",
+      ulti: false
     };
   },
   methods: {
@@ -187,10 +206,11 @@ export default {
               alert(error.response.data.message);
             }
           });
-      } else {
-        this.q--;
+      } else if (this.answer == "") {
         this.answer = "";
+      } else {
         this.next = true;
+        this.q--;
       }
     },
     // vaciar
@@ -199,17 +219,26 @@ export default {
       Swal.fire({
         icon: "success",
         title: "has acabado el reto",
-        text: "Gracias",
-        confirmButtonText: "Ok"
+        text: "Gracias"
       });
-      setTimeout(function() {
-        location.reload();
-      }, 1500);
+      this.$router.push("/");
     },
     settime() {
-      this.capsula = true;
-      this.pulsarboton = false;
-      this.crono();
+      if (
+        this.questionTime[0].difficulty == "fácil" ||
+        this.questionTime[0].difficulty == "medio"
+      ) {
+        this.ulti = false;
+        this.capsula = true;
+        this.pulsarboton = false;
+        this.crono();
+      } else if (this.questionTime[0].difficulty == "difícil") {
+        this.ulti = true;
+        this.capsula = true;
+        this.pulsarboton = false;
+
+        this.crono();
+      }
     },
 
     crono() {
@@ -266,10 +295,12 @@ export default {
         }
       }
     },
+    // ULTIMATE
     pausa() {
       if (this.pausaDis == 1) {
         this.questionTime[0].time = this.questionTime[0].time + 10;
         this.pausaDis--;
+        this.estado = "Ultimate no disponible";
       } else {
         this.pausaDis = 0;
       }
@@ -294,8 +325,7 @@ export default {
 
 .time {
   width: 500px;
-  background: chocolate;
-  display: flex;
+  background: rgb(147, 210, 30);
   position: relative;
 }
 .timo {
@@ -303,6 +333,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(../assets/fondo3.jpg);
+}
+.fulltime {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 .cronometro {
   display: block;
@@ -314,45 +351,146 @@ export default {
   position: absolute;
   bottom: 0;
   top: 2rem;
-  right: 25rem;
+  right: 14.5rem;
+}
+.ultimate {
+  display: flex;
+  flex-direction: column;
 }
 .timingad {
   font-size: 2.2rem;
   position: absolute;
   bottom: 0;
   top: 2rem;
-  left: 35rem;
+  left: 31rem;
 }
 .img {
   width: 10rem;
 }
 
-.roc {
-  display: flex;
-  padding: 0%;
+/* pregunta */
+.text {
   list-style-type: none;
-  overflow: hidden;
 }
-.roc li {
-  min-width: 100%;
+/* respuestas */
+.liprimera {
+  color: rgb(0, 0, 0);
+}
+.pri {
   display: flex;
-  flex-direction: column;
+  background-image: url(../assets/fondo3.jpg);
+  list-style-type: none;
+}
+.primerapregunta {
+  margin: auto;
+  display: inline-block;
+  background: olive;
+  width: 49%;
+}
+.primerapregunta li {
+  word-wrap: break-word;
+
   align-items: center;
-  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
 }
-.roc li p {
-  display: block;
-  margin: 15px 0;
-  font-size: 35px;
+.primerapregunta li p {
+  font-size: 3rem;
 }
+.segundapregunta {
+  background-color: rgb(255, 255, 255);
+  width: 49%;
+}
+.segundapregunta li {
+  word-wrap: break-word;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+}
+.segundapregunta li p {
+  font-size: 3rem;
+}
+
 /* pausa */
 .pause {
   text-decoration: none;
   float: left;
   margin: auto;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 6em;
+  height: 6rem;
   border: solid 2px #fff;
   border-radius: 10%;
+}
+.green {
+  color: blueviolet;
+}
+.red {
+  color: red;
+}
+
+.rer {
+  margin-top: 25px;
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(224, 73, 73, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
+}
+.rer:hover {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.6rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+#a {
+  width: 20px;
+  height: 20px;
+}
+#a:checked {
+  -webkit-animation: pulsate 3s ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  box-shadow: 4px 7px 20px #000200;
+  opacity: 0.7;
+  width: 3%;
+}
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 34;
+  }
+  50% {
+    opacity: 10;
+  }
+  100% {
+    opacity: 34;
+  }
+}
+/* footer */
+.footer {
+  background-image: url(../assets/fondo3.jpg);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 45px;
+  margin-top: 20px;
+}
+.footer p {
+  margin: 0;
+}
+.footer p a {
+  margin: 0;
+  color: rgb(0, 0, 0);
 }
 </style>

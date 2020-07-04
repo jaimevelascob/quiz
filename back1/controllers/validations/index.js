@@ -89,24 +89,24 @@ const editUserSchema = Joi.object().keys({
 // Anwers
 const questionSchema = Joi.object().keys({
   answerA: Joi.string()
-    .max(100)
+    .max(70)
     .error(
-      generateError("La respuesta A no puede pasar de 100 caracteres", 400)
+      generateError("La respuesta A no puede pasar de 70 caracteres", 400)
     ),
   answerB: Joi.string()
-    .max(100)
+    .max(70)
     .error(
-      generateError("La respuesta B no puede pasar de 100 caracteres", 400)
+      generateError("La respuesta B no puede pasar de 70 caracteres", 400)
     ),
   answerC: Joi.string()
-    .max(100)
+    .max(70)
     .error(
-      generateError("La respuesta C no puede pasar de 100 caracteres", 400)
+      generateError("La respuesta C no puede pasar de 70 caracteres", 400)
     ),
   answerD: Joi.string()
-    .max(100)
+    .max(70)
     .error(
-      generateError("La respuesta D no puede pasar de 100 caracteres", 400)
+      generateError("La respuesta D no puede pasar de 70 caracteres", 400)
     ),
   text: Joi.string()
     .max(100)

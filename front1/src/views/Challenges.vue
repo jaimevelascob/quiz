@@ -29,24 +29,18 @@
       <button @click="getChallenge()">Buscar</button>
       <button @click="clearInput()">Clean</button>
     </div>
-
-    <!--  SIMBOLO DE CARGA  -->
-    <div v-show="loading" class="lds-roller">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
     <!-- COMPONENTE MEETINGS -->
-    <div class="awtestimonials">
-      <challengelist :challenges="challenges" v-on:delete="deleteChallenge"></challengelist>
-    </div>
+
+    <challengelist :challenges="challenges"></challengelist>
+
     <div class="pagination">
       <!-- <i id="prev" class="awarrow awarrowleft" @click="AnswerChange()">a</i>
       <br />
       <i id="next" class="awarrow awarrowright" @click="AnswerChange()">a</i>-->
+    </div>
+    <!-- Footer-->
+    <div>
+      <Footer></Footer>
     </div>
     <!-- NO RESULTS -->
     <p v-show="noResults" style="color:red">No results</p>
@@ -57,16 +51,18 @@
 import axios from "axios"; // Importando AXIOS
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
+import Swal from "sweetalert2";
+// IMPORTANDO Footer
+import Footer from "@/components/Footer.vue";
 //IMPORTANDO meetingS
 import challengelist from "@/components/ChallengeList.vue";
 export default {
   name: "Challenges",
-  components: { challengelist, Menu },
+  components: { challengelist, Menu, Footer },
   props: ["id"],
   data() {
     return {
       challenges: [],
-      loading: true,
       search: "",
       filter: "",
       dateInput: false,
@@ -99,32 +95,13 @@ export default {
           `http://localhost:3000/challengelist?search=${self.search}&filter=${self.filter}`
         )
         .then(function(response) {
-          //TIEMPO DE CARGA
-          setTimeout(function() {
-            self.loading = false;
-            self.challenges = response.data.data;
-          }, 1000);
+          self.challenges = response.data.data;
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    // ELIMINAR CHALLENGE
-    deleteChallenge(data) {
-      let self = this;
-      this.id = data;
-      axios
-        .delete("http://localhost:3000/challenge/" + this.id, {
-          id: this.id
-        })
-        .then(function(response) {
-          console.log(response);
-          location.reload();
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
+
     clearInput() {
       (this.search = ""), (this.filter = "");
       this.getChallenge();
@@ -159,8 +136,9 @@ button {
   width: 10%;
 }
 .awtestimonials {
-  padding: 5rem;
+  padding: 1rem;
 }
+
 .awarrow {
   position: absolute;
   top: 50%;
@@ -189,4 +167,10 @@ button {
 .awuserdata {
   display: block;
 }
+
+/* buscador */
+.searchProduct {
+  padding-top: 7rem;
+}
+/* cargando */
 </style>

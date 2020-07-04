@@ -29,9 +29,9 @@
               <!-- DIFICULTAD -->
               <h4>DIFICULTAD</h4>
               <select class="dif" v-model="difficulty" multiple>
-                <option value="facil">fácil</option>
+                <option value="fácil">fácil</option>
                 <option value="medio">medio</option>
-                <option value="dificil">difícil</option>
+                <option value="difícil">difícil</option>
               </select>
               <br />
             </div>

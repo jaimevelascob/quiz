@@ -51,8 +51,9 @@
             </div>
           </div>
           <div class="botones">
-            <button @click="uploadEvent()">Crear</button>
-            <button @click="push">Volver</button>
+            <button class="botoncitos" @click="push">Volver</button>
+            <button class="botoncitos" @click="uploadEvent()">Crear</button>
+            <button class="but" @click="deleteCha()">DELETE</button>
             <p class="color1" v-show="required">Tienes datos sin completar</p>
             <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
           </div>
@@ -194,8 +195,6 @@ export default {
       this.$router.push("/challenges");
     },
     pulse() {
-      this.validatingData();
-      let clear = document.getElementById("checkbox");
       if (
         this.solution == "A" ||
         this.solution == "B" ||
@@ -203,20 +202,53 @@ export default {
         this.solution == "D"
       )
         return this.solution;
-
-      // COGER EL TITTLE PARA GUARDARLO
-      let titulo = this.challenges[0].id;
     },
-    // ESCONDER TITLE
-    titleHind() {
-      this.modal = false;
+    // ELIMINAR CHALLENGE
+    deleteChallenge() {
+      let self = this;
+      axios
+        .delete("http://localhost:3000/challenge/" + self.$route.params.id)
+        .then(function(response) {
+          Swal.fire({
+            icon: "success",
+            title: "Coworking eliminado",
+            text: "Este coworking ya no existe",
+            confirmButtonText: "Ok"
+          });
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            alert(error.response.data.message);
+          }
+        });
+    },
+    deleteCha() {
+      Swal.fire({
+        title: "Estás seguro?",
+        text: "No prodras recuperar tus datos una vez eliminados",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si,eliminar!"
+      }).then(result => {
+        if (result.value) {
+          this.deleteChallenge();
+          Swal.fire(
+            "Borrado!",
+            "El challenge fue eliminado con éxito",
+            "success"
+          );
+        }
+      });
     }
   },
   created() {
     this.getChallenge();
-    this.titleHind();
     this.getUserName();
-    // this.validateQuestion();
   }
 };
 </script>
@@ -283,6 +315,39 @@ export default {
 }
 .botones {
   padding-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.botoncitos {
+  cursor: pointer;
+  box-shadow: rgba(224, 73, 73, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 22px;
+  line-height: 0.875rem;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
+}
+.but {
+  cursor: pointer;
+  box-shadow: rgba(192, 13, 13, 0.25) 0px -4px inset;
+  color: rgb(192, 39, 39, 0.85);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 22px;
+  line-height: 0.875rem;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
 }
 .color1 {
   display: flex;
