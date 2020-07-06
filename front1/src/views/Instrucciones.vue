@@ -12,7 +12,7 @@
       <h2>2. Ir a lista de retos y añadir preguntas</h2>
       <h2>3. Una vez terminado de crear las preguntas, pulsar el de jugar y aceptar el reto</h2>
       <h2>4. Acabar el reto antes de que termine el tiempo</h2>
-      <p>Si aciertas la pregunta, pasas a la siguiente,</p>
+      <p>Si aciertas la pregunta pasas a la siguiente,</p>
       <p>pero si fallas, vuelves a la anterior.</p>
       <h3>El juego está pensado para que añadas tú la dificultad que creas conveniente</h3>
       <h3>conforme a las preguntas y el tiempo dado</h3>
@@ -20,9 +20,6 @@
         Si el reto es de dificultad difícil,
         habrá un botón con una habilidad especial que te dará +10 seg en el cronometro.
       </h2>
-      <div class="rock">
-        <h1>Good luck</h1>
-      </div>
     </div>
   </div>
 </template>
@@ -45,6 +42,7 @@ export default {
   margin: auto;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  border-radius: 100%;
 }
 .primeracapa:hover {
   -webkit-transform: scale(0.9);
@@ -58,26 +56,6 @@ h3 {
 }
 h2::first-letter {
   color: #ff6363;
-}
-.rock {
-  -webkit-animation: pulsate 3s ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  box-shadow: 4px 3px 15px #b963ff;
-  color: rgb(81, 255, 0);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-@-webkit-keyframes pulsate {
-  0% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 0.6;
-  }
 }
 </style>
 

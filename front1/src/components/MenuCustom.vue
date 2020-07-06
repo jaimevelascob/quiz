@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 .nav {
-  background: #333;
+  background: rgba(0, 0, 0, 0.8);
   color: rgb(248, 229, 229);
   height: 80px;
 
@@ -90,7 +90,10 @@ export default {
   left: 0;
   top: 0;
   position: fixed;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
+
 .nav a {
   color: rgb(255, 255, 255);
 }

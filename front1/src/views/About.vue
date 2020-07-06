@@ -6,23 +6,30 @@
     <div class="pro">
       <li>
         <p>Buenas!!! Soy el creador de esta plataforma 🧟‍♂️.</p>
-        <p>Me siento muy halagado si no has clickado esto sin querer 🤔</p>
-        <p>y si de verdad estas interesad@ en saber más acerca de mí 🥳.</p>
-        <br />
-        <p>Para ello te dejo aquí enlaces para que puedas conocerme (un poco mejor)</p>
+      </li>
+      <li>
+        <p>Me siento muy halagado si no has llegado hasta aquí sin querer...🤔...</p>
+      </li>
+      <li>
+        <p>...y si de verdad estas interesad@ en saber más acerca de mí 🥳.</p>
+      </li>
+
+      <br />
+      <li>
+        <p>Para ello te dejo abajo un par de enlaces y asi puedrás conocerme (un poco mejor)</p>
       </li>
     </div>
-    <div class="preenlaces">
+    <nav class="preenlaces">
       <li>
-        <p>👇 👇 👇</p>
+        <p>👇</p>
       </li>
       <li>
-        <p>👇 👇 👇</p>
+        <p>👇</p>
       </li>
       <li>
-        <p>👇 👇 👇</p>
+        <p>👇</p>
       </li>
-    </div>
+    </nav>
     <div class="enlaces">
       <ul id="aw-gallery">
         <li>
@@ -51,9 +58,41 @@ export default {
 }
 /* perfil */
 .pro {
-  padding: 5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-image: url(../assets/astro.jpg);
+}
+.pro li {
+  list-style-type: none;
+  align-items: center;
+  margin-top: 50px;
+  letter-spacing: 2.5px;
+  text-align: center;
+  background: #edf1e0;
+  border: 0.5px solid #615656;
+  font-size: 14px;
+  height: 171px;
+  width: 750px;
+  box-shadow: 1px 1px 15px #333333;
+}
+.pro li p {
+  margin: 2rem;
+  font-size: 30px;
 }
 .enlaces {
+  background-image: url(../assets/quest.jpg);
+}
+.enlaces ul li a {
+  color: white;
+  font-size: 35px;
+  text-decoration: none;
+}
+.enlaces ul li p {
+  color: white;
+  font-size: 20px;
 }
 .about {
   display: flex;
@@ -62,21 +101,27 @@ export default {
 }
 .preenlaces {
   display: flex;
-  flex-direction: column;
-  background: chartreuse;
+  flex-direction: row;
+  justify-content: space-around;
+  background-image: url(../assets/quest.jpg);
 }
 .preenlaces li {
+  border-radius: 55%;
   display: flex;
-  justify-content: center;
-  background: chocolate;
+  background-image: url(../assets/quest.jpg);
+  box-shadow: 1px 1px 15px #333333;
+  padding: 1rem;
+  font-size: 40px;
 }
 /* Gallery */
 #aw-gallery {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
   list-style-type: none;
   cursor: pointer;
-  margin: 0;
+  margin-left: 0;
   padding: 0;
   padding: 1rem;
 }
