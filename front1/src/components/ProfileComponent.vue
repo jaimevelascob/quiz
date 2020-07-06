@@ -2,11 +2,24 @@
   <div>
     <div class="profile">
       <div class="profi2">
-        <p class="rol">{{ profile.id ? 'ℕ: ' + profile.id : null}}</p>
-        <p>{{ profile.nickName ? 'Nick: ' + profile.nickName : null}}</p>
-        <p>{{ profile.email ? 'Email: ' + profile.email : null}}</p>
-        <p>{{ profile.registrationDate ? 'Miembro desde: ' + profile.registrationDate.substr(0,10) : null}}</p>
-        <p>{{ profile.role ? 'Rol: ' + profile.role : null}}</p>
+        <ul id="aw-gallery">
+          <li>
+            <p class="rol">{{ profile.id ? ' 🐻‍ ' + profile.id : null}}</p>
+          </li>
+          <li>
+            <p>{{ profile.nickName ? profile.nickName : null}}</p>
+          </li>
+          <li>
+            <p>{{ profile.email ? profile.email : null}}</p>
+          </li>
+          <li>
+            <p>{{ profile.registrationDate ? 'Miembro desde: ' + profile.registrationDate.substr(0,10) : null}}</p>
+          </li>
+          <li>
+            <p>{{ profile.role ? profile.role : null}}</p>
+          </li>
+        </ul>
+
         <br />
       </div>
     </div>
@@ -33,6 +46,10 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap");
+* {
+  font-family: "Dosis", sans-serif;
+}
 .profile {
   padding-top: 5rem;
 
@@ -40,7 +57,6 @@ export default {
   align-items: center;
   align-content: center;
   flex-direction: column;
-  background-image: url(../assets/hand.jpg);
 }
 .profi2 {
   background: rgb(255, 255, 255);
@@ -48,11 +64,66 @@ export default {
   flex-direction: column;
   align-items: center;
   align-content: center;
+  background-image: url(../assets/hand.jpg);
+  border-image-repeat: space;
+  opacity: 0.9;
 }
 p {
   padding: 1rem;
-  font-size: 30px;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  font-size: 25px;
+  color: white;
 }
 .rol {
+}
+/* Gallery */
+#aw-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  padding: 1rem;
+}
+
+#aw-gallery li {
+  padding: 5rem;
+  width: 20%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#aw-gallery li img {
+  display: block;
+  width: 100%;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#aw-gallery li:hover img {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+.hola {
+  background: rgb(235, 235, 243);
+}
+#aw-gallery li:after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#aw-gallery li:hover:after {
+  width: 0;
+  height: 50%;
 }
 </style>

@@ -179,17 +179,25 @@ export default {
   height: 350px;
   overflow: hidden;
   box-shadow: 4px 3px 15px #504955;
+  cursor: pointer;
+  list-style-type: none;
 }
 .imag {
   position: absolute;
   top: 12.125vw;
   width: 2045px;
+  overflow-x: hidden;
+  flex-wrap: wrap;
 }
 .log {
   width: 600px;
   height: 480px;
   box-shadow: 1px 1px 8px #272c28;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  display: block;
 }
+
 ul li {
   text-decoration: none;
   list-style: none;
@@ -296,6 +304,8 @@ li.imag {
   cursor: pointer;
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .awarrow.awarrowleft {
   right: 200px;
@@ -308,6 +318,24 @@ li.imag {
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
   color: white;
+}
+
+.awarrow:hover {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+.awarrow:after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 .awarrow:hover {
   border-color: #dca453;

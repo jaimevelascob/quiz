@@ -260,4 +260,12 @@ button {
   padding: 0px 20px 4px;
   letter-spacing: 1px;
 }
+.modal {
+  position: fixed;
+  top: 300px;
+  left: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255);
+  width: 100%;
+}
 </style>
