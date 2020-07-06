@@ -124,7 +124,7 @@ export default {
 <style scoped>
 /* priemra capa */
 .capauno {
-  background: rgb(0, 0, 0, 0);
+  background: rgba(223, 14, 14, 0);
   display: flex;
   flex-direction: column;
   align-content: flex-end;
@@ -133,7 +133,7 @@ export default {
 }
 .segundaimagen {
   padding: 0.5rem;
-  background: rgb(0, 0, 0, 0.8);
+  background: rgba(59, 40, 65, 0.7);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -154,11 +154,11 @@ export default {
 }
 .utl {
   padding: 0.5rem;
-  box-shadow: 4px 3px 50px #ffc163;
+  box-shadow: 4px 3px 50px #534e47;
 }
 .ulti {
   background: rgb(0, 0, 0, 0.2);
-  box-shadow: 4px 3px 8px #63ff7d;
+  box-shadow: 4px 3px 8px #0b0c0b;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -178,7 +178,7 @@ export default {
   width: 500px;
   height: 350px;
   overflow: hidden;
-  box-shadow: 4px 3px 15px #b963ff;
+  box-shadow: 4px 3px 15px #504955;
 }
 .imag {
   position: absolute;
@@ -188,7 +188,7 @@ export default {
 .log {
   width: 600px;
   height: 480px;
-  box-shadow: 1px 1px 8px #63ff7d;
+  box-shadow: 1px 1px 8px #272c28;
 }
 ul li {
   text-decoration: none;
@@ -272,7 +272,8 @@ li.imag {
   font-size: 30px;
 }
 .pro {
-  background-image: url(../assets/fondo.jpg);
+  background: rgba(98, 134, 128, 0.7);
+  box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
@@ -283,7 +284,7 @@ li.imag {
   position: absolute;
   top: 50%;
   display: inline-block;
-  border: solid rgb(131, 128, 128);
+  border: solid rgb(255, 250, 250);
   padding: 20px;
   border-width: 0 3px 3px 0;
   cursor: pointer;
