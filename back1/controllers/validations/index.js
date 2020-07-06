@@ -109,8 +109,8 @@ const questionSchema = Joi.object().keys({
       generateError("La respuesta D no puede pasar de 70 caracteres", 400)
     ),
   text: Joi.string()
-    .max(100)
-    .error(generateError("La pregunta no puede pasar de 100 caracteres", 400)),
+    .max(75)
+    .error(generateError("La pregunta no puede pasar de 75 caracteres", 400)),
   solution: Joi.string()
     .max(1)
     .error(generateError("  👉😴Se te ha olvidado marcar la solución", 400)),

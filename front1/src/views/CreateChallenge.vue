@@ -53,7 +53,7 @@
             </div>
             <!-- SUBIR IMAGEN -->
             <div class="image">
-              <label for="image">Elije una imagen:</label>
+              <label for="image"></label>
               <input
                 type="file"
                 id="file"
@@ -65,8 +65,8 @@
           </div>
           <div class="button">
             <button @click="uploadEvent()">Crear</button>
-            <p class="color1" v-show="required">Tienes datos sin completar</p>
           </div>
+          <p class="color1" v-show="required">Tienes datos sin completar</p>
         </div>
       </div>
     </div>
@@ -193,8 +193,8 @@ export default {
   text-align: center;
 }
 .pad {
-  padding: 9.5rem;
-  background-image: url(../assets/fondo.jpg);
+  padding: 8.5rem;
+  background-image: url(../assets/rt.jpg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,7 +202,7 @@ export default {
 .capa {
   background: rgb(255, 255, 255);
   border-radius: 5%;
-  box-shadow: 4px 3px 15px rgb(238, 164, 130);
+  box-shadow: 4px 3px 15px rgba(255, 255, 255, 0.9);
 }
 .primero {
   width: 50%;
@@ -268,25 +268,65 @@ select:focus {
 }
 .image {
   padding-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.button {
-  padding-bottom: 102px;
+button {
+  position: absolute;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+  word-wrap: break-word;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 20px 4px;
+  letter-spacing: 1px;
+}
+input {
+  position: absolute;
+  width: initial;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+  word-wrap: break-word;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 20px 2px;
+  letter-spacing: 1px;
+}
+input[type="file"]::-webkit-file-upload-button {
+  background: white;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+
+  /* style goes here */
 }
 .color1 {
-  color: rgb(51, 150, 5);
-  -webkit-animation: pulsate 3s ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  opacity: 0.3;
-}
-@-webkit-keyframes pulsate {
-  0% {
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 0.9;
-  }
+  color: rgb(0, 0, 0);
+  letter-spacing: 0.5rem;
 }
 </style>

@@ -9,14 +9,13 @@
 
     <div class="aceptar" v-show="pulsarboton">
       <div class="rep">
-        <h1>ESTÁS SEGURO DE QUE QUIERES EMPEZAR EL RETO?</h1>
+        <h1 class="dedo">👇</h1>
         <button class="inicioButton" @click="settime()" value="inicio">INCIAR</button>
+        <h1 class="dedo">🖕</h1>
       </div>
       <!-- Footer-->
     </div>
-    <div class="ruu">
-      <Footer></Footer>
-    </div>
+
     <!-- /ACEPTAR BUTTON -->
     <div v-show="capsula" class="awtestimonials">
       <!-- CRONOMETRO -->
@@ -30,14 +29,6 @@
                 alt="cronometro"
               />
               <p class="timing" id="times">{{ this.questionTime[0].time }}</p>
-              <!-- ULTIMATE -->
-              <div v-show="ulti" class="ultimate">
-                <img class="pause" src="../assets/cerebro4.jpeg" alt />
-                <button class="buttoncito" @click="pausa()">Pausar</button>
-                <p
-                  :class="{ green: estado=== 'Ultimate disponible', red: estado=== 'Ultimate no disponible'}"
-                >{{estado}}</p>
-              </div>
             </div>
             <!-- /ULTIMATE -->
           </div>
@@ -45,9 +36,9 @@
       </div>
       <!-- /CRONOMETRO -->
 
-      <div>
-        <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
-      </div>
+      <!-- <div>
+       
+      </div>-->
       <div class="text">
         <li>
           <h1>{{ challenges[q].text }}</h1>
@@ -94,7 +85,14 @@
       </div>
       <!-- /BOTTON POSTEAR -->
       <div class="footer">
-        <p></p>
+        <!-- ULTIMATE -->
+        <div v-show="ulti" class="ultimate">
+          <button class="buttoncito" @click="pausa()">Pausar</button>
+          <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
+          <p
+            :class="{ green: estado=== 'Ultimate disponible', red: estado=== 'Ultimate no disponible'}"
+          >{{estado}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -324,7 +322,6 @@ export default {
 <style scoped>
 /* inicio */
 .inicioButton {
-  margin-top: 25px;
   width: initial;
   cursor: pointer;
   display: inline-block;
@@ -348,37 +345,41 @@ export default {
   width: initial;
   cursor: pointer;
   display: inline-block;
-  padding: 0.6rem;
+  box-shadow: rgba(255, 255, 255, 0.35) 0px -4px inset;
+  padding: 0.8rem;
   color: rgba(0, 0, 0, 0.75);
 }
 
 .aceptar {
-  background-image: url(../assets/fondo3.jpg);
+  background-image: url(../assets/mong.jpg);
 }
 .rep {
-  background: rgb(255, 255, 255);
+  background-image: url(../assets/quiz.jpg);
   padding-top: 20rem;
-  padding-bottom: 22rem;
+  padding-bottom: 17rem;
 }
-
+.rep h1 {
+  font-size: 50px;
+}
 .aceptar {
   padding: 2rem;
 }
 .ult {
-  color: rebeccapurple;
+  color: rgb(196, 152, 58);
 }
 
 .time {
   width: 500px;
-  background: rgb(147, 210, 30);
+  background: rgb(255, 255, 255);
   position: relative;
 }
+
 .timo {
   width: 100;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../assets/fondo3.jpg);
+  background-image: url(../assets/rt.jpg);
 }
 .fulltime {
   display: flex;
@@ -400,7 +401,10 @@ export default {
 }
 .ultimate {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
 }
 .timingad {
   font-size: 2.2rem;
@@ -416,30 +420,36 @@ export default {
 /* pregunta */
 .text {
   list-style-type: none;
+  text-transform: uppercase;
 }
 /* respuestas */
 .liprimera {
-  color: rgb(0, 0, 0);
-  border-top: 10px solid #ced9f0;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  color: rgb(255, 255, 255);
+  border-top: 10px solid #ffffff;
+  background-image: url(../assets/rtt.jpg);
 }
 .lisegunda {
-  color: rgb(0, 0, 0);
-  border-bottom: 10px solid #cef0d1;
+  color: rgb(255, 255, 255);
+  border-bottom: 10px solid #ffffff;
   border-top-style: ridge;
+  background-image: url(../assets/rtt.jpg);
 }
 .litercera {
-  color: rgb(0, 0, 0);
-
-  border-top: 10px solid #ddcef0;
+  color: rgb(255, 255, 255);
+  background-image: url(../assets/rtt.jpg);
+  border-top: 10px solid #ffffff;
 }
 .licuarta {
-  color: rgb(0, 0, 0);
-  border-bottom: 10px solid #eccef0;
+  color: rgb(255, 255, 255);
+  border-bottom: 10px solid #f8f8f8;
   border-top-style: ridge;
+  background-image: url(../assets/rtt.jpg);
 }
 .pri {
   display: flex;
-  background-image: url(../assets/fondo3.jpg);
+  background-image: url(../assets/rtt.jpg);
   list-style-type: none;
 }
 .primerapregunta {
@@ -475,22 +485,45 @@ export default {
 /* pausa */
 .pause {
   text-decoration: none;
-  float: left;
-  margin: auto;
+  justify-content: space-around;
   width: 6em;
   height: 6rem;
-  border: solid 2px #fff;
-  border-radius: 10%;
+  text-align: center;
+  align-items: center;
+}
+button {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(255, 148, 148, 0.25) 0px -4px inset;
+  color: rgb(155, 17, 167);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 5px;
+  min-width: 420px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
 }
 .green {
   color: blueviolet;
+  font-size: 30px;
 }
 .red {
   color: red;
+  font-size: 30px;
 }
 
 .rer {
-  margin-top: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   width: initial;
   cursor: pointer;
   display: inline-block;
@@ -541,11 +574,11 @@ export default {
 }
 /* footer */
 .footer {
-  background-image: url(../assets/fondo3.jpg);
+  background-image: url(../assets/rt.jpg);
   color: rgb(0, 0, 0);
   text-align: center;
-  padding: 45px;
-  margin-top: 20px;
+  padding: 25px;
+  margin-top: 0px;
 }
 .footer p {
   margin: 0;

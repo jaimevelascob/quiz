@@ -235,5 +235,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button {
+  position: absolute;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+  word-wrap: break-word;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 20px 4px;
+  letter-spacing: 1px;
+}
 </style>

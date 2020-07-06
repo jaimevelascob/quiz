@@ -121,6 +121,7 @@ async function challengeQuestions(req, res, next) {
       error.httpCode = 403;
       throw error;
     }
+
     console.log(text);
     const date = formatDateToDB(new Date());
     await connection.query(
@@ -198,13 +199,15 @@ async function createChallenge(req, res, next) {
         throw imageError;
       }
     }
+    console.log(savedFileName);
     await connection.query(
-      "INSERT INTO challenge(id,time, title, difficulty, date, user_id) VALUES (?,?,?,?,?,?)",
-      [id, time, title, difficulty, date, user_id]
+      "INSERT INTO challenge(image, id,time, title, difficulty, date, user_id) VALUES (?,?,?,?,?,?,?)",
+      [savedFileName, id, time, title, difficulty, date, user_id]
     );
     res.send({
       status: "ok",
       id: id,
+      image: savedFileName,
       time: time,
       title: title,
       difficulty,

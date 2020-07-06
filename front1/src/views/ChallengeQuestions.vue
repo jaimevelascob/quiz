@@ -8,56 +8,105 @@
 
     <div class="pad">
       <div class="primero">
-        <div class="capa">
-          <div>
-            <div class="pregunta">
-              <input class="input" type="text" name="text" v-model="text" placeholder="Pregunta..." />
-            </div>
+        <div class="capauno">
+          <div class="pregunta">
+            <h1>Pregunta</h1>
+            <input class="input" type="text" name="text" v-model="text" placeholder="Pregunta..." />
+          </div>
+
+          <div class="capa">
             <!-- PREGUNTA A-->
-            <div class="respuestas">
-              <div class="preguntaA">
-                <input type="answer" name="answer" v-model="answerA" placeholder="Respuesta A..." />
-              </div>
-              <!-- PREGUNTA B-->
-              <div class="preguntaB">
-                <input type="answer" name="answer" v-model="answerB" placeholder="Respuesta B..." />
-              </div>
-              <!-- PREGUNTA C-->
-              <div class="preguntaC">
-                <input type="answer" name="answer" v-model="answerC" placeholder="Respuesta C..." />
-              </div>
-              <!-- PREGUNTA D-->
-              <div class="preguntaD">
-                <input type="answer" name="answer" v-model="answerD" placeholder="Respuesta D..." />
-              </div>
+            <div class="preguntaA">
+              <h2>Respuesta</h2>
+              <input
+                class="prega"
+                type="answer"
+                name="answer"
+                v-model="answerA"
+                placeholder="Respuesta A..."
+              />
+              <input
+                class="prego"
+                type="radio"
+                id="a"
+                value="A"
+                v-model="solution"
+                @click="pulse()"
+              />
+              <label class="labela" for="A">A</label>
             </div>
-          </div>
-          <div>
-            <!-- CHECKBOX -->
-            <h2>Selecciona la respuesta</h2>
-            <div id="checkbox">
-              <input type="radio" id="a" value="A" v-model="solution" @click="pulse()" />
-              <label for="A">A</label>
-              <br />
-              <input type="radio" id="b" value="B" v-model="solution" @click="pulse()" />
-              <label for="B">B</label>
-              <br />
-              <input @click="pulse()" type="radio" id="c" value="C" v-model="solution" />
-              <label for="C">C</label>
-              <br />
-              <input @click="pulse()" type="radio" id="d" value="D" v-model="solution" />
-              <label for="D">D</label>
-              <br />
+            <!-- PREGUNTA B-->
+            <div class="preguntaB">
+              <h2>
+                Respuesta
+                <B></B>
+              </h2>
+              <input
+                class="prega"
+                type="answer"
+                name="answer"
+                v-model="answerB"
+                placeholder="Respuesta B..."
+              />
+              <input
+                class="prego"
+                type="radio"
+                id="b"
+                value="B"
+                v-model="solution"
+                @click="pulse()"
+              />
+              <label class="labelb" for="B">B</label>
             </div>
-          </div>
-          <div class="botones">
-            <button class="botoncitos" @click="push">Volver</button>
-            <button class="botoncitos" @click="uploadEvent()">Crear</button>
-            <button class="but" @click="deleteCha()">DELETE</button>
-            <p class="color1" v-show="required">Tienes datos sin completar</p>
-            <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
+            <!-- PREGUNTA C-->
+            <div class="preguntaC">
+              <h2>Respuesta</h2>
+              <input
+                class="prega"
+                type="answer"
+                name="answer"
+                v-model="answerC"
+                placeholder="Respuesta C..."
+              />
+              <input
+                class="prego"
+                @click="pulse()"
+                type="radio"
+                id="c"
+                value="C"
+                v-model="solution"
+              />
+              <label class="labelc" for="C">C</label>
+            </div>
+            <!-- PREGUNTA D-->
+            <div class="preguntaD">
+              <h2>Respuesta</h2>
+              <input
+                class="prega"
+                type="answer"
+                name="answer"
+                v-model="answerD"
+                placeholder="Respuesta D..."
+              />
+              <input
+                class="prego"
+                @click="pulse()"
+                type="radio"
+                id="d"
+                value="D"
+                v-model="solution"
+              />
+              <label class="labeld" for="D">D</label>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="botones">
+        <button class="botoncitos" @click="push">Volver</button>
+        <button class="botoncitos" @click="uploadEvent()">Crear</button>
+        <button class="but" @click="deleteCha()">DELETE</button>
+        <p class="color1" v-show="required">Tienes datos sin completar</p>
+        <!-- <router-link :to="{ name: 'Login' }">Login</router-link> -->
       </div>
     </div>
     <!-- Footer-->
@@ -256,68 +305,121 @@ export default {
 <style scoped>
 /* card */
 .pad {
-  padding: 8.5rem;
-  /* background-image: url(../assets/fondo3.jpg); */
-  background: rgba(119, 119, 118, 0.3);
+  padding: 10rem;
+  background-image: url(../assets/quest.jpg);
+}
+.capa {
+  display: flex;
+  flex-direction: row;
+  background: rgb(255, 255, 255);
+  justify-content: space-around;
+}
+.capados {
+  background: rgb(255, 255, 255);
+}
+.primero {
+  display: flex;
+  flex-direction: column;
+}
+/* pregunta */
+.pregunta {
+}
+.pregunta h1 {
+  font-size: 50px;
+  letter-spacing: 2.5px;
+}
+.pregunta input {
+  width: 100%;
+  font-size: 30px;
+  letter-spacing: 3.5px;
+}
+.preguntaA {
+  box-shadow: rgb(33, 196, 187) 0px -4px inset;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.capa {
   background: rgb(255, 255, 255);
-  border-radius: 5%;
-  box-shadow: 4px 3px 15px rgb(238, 164, 130);
+  margin-top: 3rem;
 }
-.primero {
-  width: 50%;
-  background: rgb(238, 161, 130);
-  box-shadow: 4px 3px 15px #7dc965;
-}
-/* pregunta */
-.input {
-  border-radius: 4px;
-  box-shadow: 1px 1px 2px #333333;
-  background: #ffffff;
-  border: 1px solid #000000;
-  width: 700px;
-  height: 30px;
-  align-items: center;
-  text-align: center;
-}
-.pregunta {
-  padding: 1.5rem;
-  margin-bottom: auto;
-}
-/* respuestas */
-.respuestas {
-  background: #7dc965;
-  display: block;
-  margin: auto;
-}
-.respuestas div {
-  padding: 1.5rem;
-  margin-bottom: auto;
-}
-/* respuestas*/
-.respuestas input {
-  border-radius: 4px;
-  box-shadow: 1px 1px 2px #333333;
-  background: #ffffff;
-  border: 1px solid #000000;
-  width: 700px;
-  height: 30px;
-  align-items: center;
-  text-align: center;
-}
-/* respuesta correcta */
-#checkbox {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.botones {
-  padding-bottom: 1.2rem;
+.preguntaB {
+  box-shadow: rgb(107, 184, 35) 0px -4px inset;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  background: rgb(255, 255, 255);
+  margin-top: 3rem;
+}
+.preguntaC {
+  box-shadow: rgb(194, 170, 34) 0px -4px inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  margin-top: 3rem;
+}
+.preguntaD {
+  box-shadow: rgb(243, 58, 33) 0px -4px inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  margin-top: 3rem;
+}
+.capa h2 {
+  font-size: 25px;
+  letter-spacing: 2.5px;
+}
+.preguntaA h2::first-letter {
+  color: rgb(33, 196, 187);
+}
+.preguntaB h2::first-letter {
+  color: rgb(107, 184, 35);
+}
+.preguntaC h2::first-letter {
+  color: rgb(194, 170, 34);
+}
+.preguntaD h2::first-letter {
+  color: rgb(243, 58, 33);
+}
+.prega {
+  padding: 1rem;
+  width: 100%;
+  font-size: 20px;
+  letter-spacing: 3.5px;
+}
+.prego {
+  margin-top: 1rem;
+}
+.labela {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgb(33, 196, 187);
+  font-size: 40px;
+}
+.labelb {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgb(107, 184, 35);
+  font-size: 40px;
+}
+.labelc {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgb(194, 170, 34);
+  font-size: 40px;
+}
+.labeld {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgb(243, 58, 33);
+  font-size: 40px;
+}
+
+/* respuesta correcta */
+
+.botones {
+  padding: 1.5rem;
+  display: flex;
   justify-content: space-around;
 }
 .botoncitos {
@@ -328,7 +430,7 @@ export default {
   font-weight: bold;
   text-align: center;
   min-width: 42px;
-  min-height: 22px;
+  min-height: 52px;
   line-height: 0.875rem;
   background: rgb(255, 255, 255);
   border-radius: 40px;

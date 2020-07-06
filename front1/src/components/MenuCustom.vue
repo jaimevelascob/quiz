@@ -108,6 +108,12 @@ export default {
 .log:hover {
   color: #0b76a6;
 }
+.users {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: space-around;
+}
 nav {
   float: right;
 }
@@ -171,7 +177,6 @@ nav ul li a:hover {
   min-height: 40px;
   position: relative;
   line-height: 0.875rem;
-  margin: 0px;
   border-width: 0px;
   border-style: initial;
   border-color: initial;

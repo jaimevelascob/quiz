@@ -133,7 +133,7 @@ export default {
 }
 .segundaimagen {
   padding: 0.5rem;
-  background: rgba(59, 40, 65, 0.7);
+  background-image: url(../assets/quest.jpg);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -240,7 +240,6 @@ li.imag {
 }
 .botoncitos {
   padding: 1rem;
-  word-wrap: break-word;
 }
 .otrosbots {
   position: fixed;
@@ -259,20 +258,27 @@ li.imag {
   letter-spacing: 1.5px;
 }
 .lipri {
-  background: rgb(50, 51, 49);
+  background-image: url(../assets/quest.jpg);
   padding: 2rem;
   font-size: 30px;
+  border-top: 2px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  border-left: 2px solid rgb(255, 255, 255, 0.4);
 }
 .liseg {
-  background: rgb(50, 51, 49);
+  background-image: url(../assets/quest.jpg);
   padding: 2rem;
   font-size: 30px;
+  box-shadow: rgba(20, 10, 10, 0.65) 0px -4px inset;
+  border-top: 2px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  border-left: 2px solid rgb(255, 255, 255, 0.4);
 }
 .id {
   font-size: 30px;
 }
 .pro {
-  background: rgba(98, 134, 128, 0.7);
+  background-image: url(../assets/quest.jpg);
   box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
   display: flex;
   flex-direction: column;
