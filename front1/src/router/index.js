@@ -47,11 +47,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       // Si la ruta es privada y la persona no tiene token
       if (isLoggedIn() === true) {
-        Swal.fire({
-          icon: "warning",
-          title: "Oops...",
-          text: "Pero si ya estas logeado!",
-        });
         next({
           path: "/challenges",
           query: { redirect: to.fullPath },

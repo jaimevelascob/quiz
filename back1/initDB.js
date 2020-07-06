@@ -110,7 +110,10 @@ async function main() {
             INSERT INTO users(registrationDate, lastPasswordUpdate, email, password, role, nickName, active)
             VALUES(NOW(), NOW(), "jaimevelasco3@hotmail.com", "${password}", "admin", "Jaime Velasco", true)
             `);
-
+    await connection.query(`
+            INSERT INTO users(registrationDate, lastPasswordUpdate, email, password, role, nickName, active)
+            VALUES(NOW(), NOW(), "jaimevelasco680@gmail.com", "${password}", "user", "Jaime", true)
+            `);
     console.log("Initial structure created");
     connection.release();
     process.exit();

@@ -17,10 +17,8 @@ const {
   voteChallenge,
   challengeQuestions,
   listChallengeQuestions,
-  editChallengeQuestions,
   challengeAnswers,
   listChallengeAnswers,
-  ChangeChallengeAnswers,
   createNewUserAnswers,
   getNewUserAnswers,
   challengeQuestionslist,
@@ -37,7 +35,6 @@ const {
   validateUser,
   loginUser,
   updatePasswordUser,
-  editUser,
   getUserLog,
   deleteUser,
 } = require("./controllers/users");
@@ -73,7 +70,6 @@ app.get("/users/validate", validateUser); // 👀
 // U.r.e.r id ✅
 app.get("/users", getUser); // 👀
 app.get("/users/:id", getUserLog);
-app.put("/users/:id", editUser);
 app.delete("/users/:id", deleteUser);
 //  c.h.a.l.l.e.n.g.e id votes
 app.post("/challenge/:id/votes", userIsAuthenticated, voteChallenge); // 🏁 Solo usuarios ✅
@@ -87,20 +83,10 @@ app.get("/challengelist", listChallengeQuestions); // 👀 ✅
 app.get("/challengelistquestions/:id", listChallengeQuestionsID); // 👀 ✅
 app.post("/challenge/questions", challengeQuestions); // 🏁✅
 app.get("/challenge/questions/:id", challengeQuestion); // 👀 ✅
-app.put(
-  "/challenge/:id/questions",
-  userIsAuthenticated,
-  userIsAdmin,
-  editChallengeQuestions
-); // ⛏✅Solo usuarios (que crearon esa entrada) o admin
+
 //  c.h.a.l.l.e.n.g.e id answers 🧠
 app.post("/challenge/answers", challengeAnswers); // 👀 ✅
 app.get("/challenge/answers/:id", listChallengeAnswers); // ⛏✅
-app.put(
-  "/challenge/:id/questions/answers",
-  userIsAuthenticated,
-  ChangeChallengeAnswers
-);
 
 // U.s.e.r a.n.s.w.e.r.s  🙋🏾‍♂️
 

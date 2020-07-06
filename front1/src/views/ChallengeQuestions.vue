@@ -257,7 +257,8 @@ export default {
 /* card */
 .pad {
   padding: 8.5rem;
-  background-image: url(../assets/fondo3.jpg);
+  /* background-image: url(../assets/fondo3.jpg); */
+  background: rgba(119, 119, 118, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;

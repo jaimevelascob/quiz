@@ -210,10 +210,8 @@ export default {
         .get("http://localhost:3000/users/" + self.$route.params.id)
         .then(function(response) {
           //TIEMPO DE CARGA
-          setTimeout(function() {
-            self.profile = response.data.data;
-            console.log(self.profile);
-          }, 1000);
+
+          self.profile = response.data.data;
         })
         .catch(function(error) {
           if (error.response) {

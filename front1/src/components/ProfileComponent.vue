@@ -31,8 +31,12 @@ export default {
 </script>
 
 <style scoped>
-img {
-  height: 400px;
-  width: 400px;
+.profile {
+  padding: 10rem;
+  background: gold;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
 }
 </style>

@@ -113,7 +113,7 @@ const questionSchema = Joi.object().keys({
     .error(generateError("La pregunta no puede pasar de 100 caracteres", 400)),
   solution: Joi.string()
     .max(1)
-    .error(generateError("La solucion no puede pasar de 1 caracteres", 400)),
+    .error(generateError("  👉😴Se te ha olvidado marcar la solución", 400)),
   user_id: Joi.string().max(75).error(generateError("User id", 400)),
   title: Joi.string()
     .max(75)
@@ -128,14 +128,16 @@ const questionSchema = Joi.object().keys({
 // CREATE CHALLENGE
 const challengeSchema = Joi.object().keys({
   title: Joi.string()
-    .max(255)
-    .error(
-      generateError("La respuesta A no puede pasar de 255 caracteres", 400)
-    ),
+    .max(12)
+    .error(generateError("El título no puede pasar de 12 caracteres", 400)),
   time: Joi.string()
     .max(75)
-    .error(generateError("El tiempo no puede pasar de 2 caracteres", 400)),
-  difficulty: Joi.string().max(75).error(generateError("elige", 400)),
+    .error(generateError("Es obligatorio marcar un tiempo ⏳︎", 400)),
+  difficulty: Joi.string()
+    .max(75)
+    .error(
+      generateError("Elige una dificultad adecuada para este challenge", 400)
+    ),
   user_id: Joi.string().max(75).error(generateError("elige", 400)),
 });
 

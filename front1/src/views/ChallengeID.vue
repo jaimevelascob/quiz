@@ -222,8 +222,8 @@ export default {
       this.q = 0;
       Swal.fire({
         icon: "success",
-        title: "has acabado el reto",
-        text: "Gracias"
+        title: "has logrado acabar el reto justo a tiempo!! 🏆",
+        text: "Felicidades!!!"
       });
       this.$router.push("/");
     },
@@ -245,21 +245,23 @@ export default {
       }
     },
 
-    // crono() {
-    //   // SI LLEGA A 0
-    //   if (this.questionTime[0].time == 0) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "U LOSE MAY FRIEND",
-    //       text: "OTRA VEZ SERA 😈"
-    //     });
-    //     location.reload();
-    //     // SI ES MAYOR QUE 0
-    //   } else {
-    //     this.questionTime[0].time = this.questionTime[0].time - 1;
-    //     setTimeout(this.crono, 1000);
-    //   }
-    // },
+    crono() {
+      // SI LLEGA A 0
+      if (this.questionTime[0].time == 0) {
+        Swal.fire({
+          icon: "error",
+          title: "U LOSE MAY FRIEND",
+          text: "OTRA VEZ SERA 😈"
+        });
+        location.reload();
+        // SI ES MAYOR QUE 0
+      } else {
+        this.questionTime[0].time = this.questionTime[0].time - 1;
+        setTimeout(this.crono, 1000);
+      }
+    },
+    // difficultad time
+
     bottonFijar() {
       this.pulse();
     },

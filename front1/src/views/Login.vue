@@ -6,7 +6,7 @@
     </div>
     <h2>Haz login</h2>
     <!-- NOMBRE DE LA PAGINA -->
-    <vue-headful title="Loging" description="Logging page" />
+    <!-- <vue-headful title="Loging" description="Logging page" /> -->
     <!-- /NOMBRE DE LA PAGINA -->
     <div class="log">
       <input type="text" name="usuario" v-model="usuario" placeholder="email..." />
@@ -45,7 +45,7 @@ export default {
         //LLEVAR A LA PAGINA DE PRODUCTOS
         this.$router.push("/challenges");
       } catch (error) {
-        alert(`Error: ${error}`);
+        alert(` ${error.response.data.message}`);
       }
     }
   }

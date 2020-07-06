@@ -93,6 +93,7 @@ export function clearLogin() {
   localStorage.removeItem("title");
   localStorage.removeItem("solucion");
   localStorage.removeItem("time");
+  localStorage.removeItem("answer");
 }
 
 // ========================= TOKEN =====================

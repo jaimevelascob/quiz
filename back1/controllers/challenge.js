@@ -402,46 +402,6 @@ async function listChallengeAnswers(req, res, next) {
   }
 }
 
-//Put challenge answers 🤯
-async function ChangeChallengeAnswers(req, res, next) {
-  try {
-    const { id } = req.params;
-    const { answer } = req.body;
-
-    const connection = await getConnection();
-
-    const [
-      current,
-    ] = await connection.query(
-      "SELECT challenge_questions_id FROM challenge_answers WHERE id=?",
-      [id]
-    );
-
-    if (!current.length) {
-      const error = new Error(`The entry with id ${id} does not exist`);
-      error.httpCode = 404;
-      throw error;
-    }
-    // Check if the authenticated user is the entry author or admin
-    if (current[0].user_id !== req.auth.id && req.auth.role !== "admin") {
-      const error = new Error("No tienes permisos para editar esta entrada");
-      error.httpCode = 401;
-      throw error;
-    }
-    await connection.query(
-      "UPDATE challenge_answers SET answer=? WHERE challenge_questions_id=?",
-      [answer, id]
-    );
-    connection.release();
-    res.send({
-      status: "ok",
-      data: answer,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
 // Post user_answers 🚀
 async function createNewUserAnswers(req, res, next) {
   try {
@@ -544,7 +504,6 @@ module.exports = {
   editChallengeQuestions,
   challengeAnswers,
   listChallengeAnswers,
-  ChangeChallengeAnswers,
   createNewUserAnswers,
   getNewUserAnswers,
   challengeQuestionslist,

@@ -33,11 +33,7 @@
 
     <challengelist :challenges="challenges"></challengelist>
 
-    <div class="pagination">
-      <!-- <i id="prev" class="awarrow awarrowleft" @click="AnswerChange()">a</i>
-      <br />
-      <i id="next" class="awarrow awarrowright" @click="AnswerChange()">a</i>-->
-    </div>
+    <div class="pagination"></div>
     <!-- Footer-->
     <div>
       <Footer></Footer>
@@ -70,24 +66,6 @@ export default {
     };
   },
   methods: {
-    // MOVER LAS PREGUNTAS
-    // AnswerChange() {
-    //   let firstChild, lastChild;
-    //   const prevArrow = document.querySelector("#prev");
-    //   const nextArrow = document.querySelector("#next");
-    //   const testimonials = document.querySelector(".awtestimonials");
-
-    //   document.addEventListener("click", () => {
-    //     if (event.target === prevArrow) {
-    //       lastChild = testimonials.lastElementChild;
-    //       console.log(lastChild);
-    //       testimonials.insertAdjacentElement("afterbegin", lastChild);
-    //     } else if (event.target === nextArrow) {
-    //       firstChild = testimonials.firstElementChild;
-    //       testimonials.insertAdjacentElement("beforeend", firstChild);
-    //     }
-    //   });
-    // },
     getChallenge() {
       let self = this;
       axios
@@ -132,45 +110,35 @@ export default {
 
 <style scoped>
 button {
-  padding: 1rem;
-  width: 10%;
-}
-.awtestimonials {
-  padding: 1rem;
-}
-
-.awarrow {
-  position: absolute;
-  top: 50%;
-  display: inline-block;
-  border: solid #eee;
-  padding: 20px;
-  border-width: 0 3px 3px 0;
   cursor: pointer;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
+  box-shadow: rgba(224, 73, 73, 0.25) 0px -4px inset;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 22px;
+  line-height: 0.875rem;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
 }
-.awarrow.awarrowleft {
-  right: 200px;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
+select {
+  font-size: 14px;
+  width: 15%;
+  background: white;
 }
-.awarrow.awarrowright {
-  left: 200px;
-  -webkit-transform: rotate(135deg);
-  transform: rotate(135deg);
-}
-.awarrow:hover {
-  border-color: #dca453;
-  box-shadow: 4px 3px 15px #a8fa8f;
-}
-.awuserdata {
-  display: block;
-}
-
 /* buscador */
 .searchProduct {
   padding-top: 7rem;
+  border: 1px solid #e5e5e5;
+}
+input {
+  width: 15%;
+  padding: 1px 22px;
+  margin: 10px 5px;
+  box-sizing: border-box;
 }
 /* cargando */
 </style>
