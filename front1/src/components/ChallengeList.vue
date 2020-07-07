@@ -8,7 +8,12 @@
               <div class="meeting" v-for="challenge in challenges" :key="challenge.id">
                 <nav class="pac">
                   <li class="imag">
-                    <img class="log" src="../assets/Logo.jpeg" alt />
+                    <!-- <img class="log" src="../assets/Logo.jpeg" alt /> -->
+                    <img
+                      class="log"
+                      :src="challenge.image ? path + challenge.image : defaultAvatar"
+                      alt
+                    />
                   </li>
                 </nav>
                 <nav class="pro">
@@ -69,7 +74,8 @@ export default {
   data() {
     return {
       path: "http://localhost:3000/uploads/",
-      modal: true,
+      defaultAvatar: "http://localhost:3000/uploads/default.png",
+      modal: "",
       nomodal: ""
     };
   },
@@ -86,6 +92,17 @@ export default {
     //     this.modal = false;
     //   }
     // },
+    //pillar foto
+    getPhoto(id, image) {
+      if (image) {
+        return this.path + image;
+      }
+      let lastNumber = id
+        .toString()
+        .split("")
+        .pop();
+      return `http://localhost:3000/uploads/${lastNumber}.jpg`;
+    },
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR
     UserLog() {
@@ -104,7 +121,6 @@ export default {
       document.addEventListener("click", () => {
         if (event.target === prevArrow) {
           lastChild = testimonials.lastElementChild;
-          console.log(lastChild);
           testimonials.insertAdjacentElement("afterbegin", lastChild);
         } else if (event.target === nextArrow) {
           firstChild = testimonials.firstElementChild;

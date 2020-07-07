@@ -196,6 +196,9 @@ export default {
     closeModal() {
       this.modalEdit = false;
       this.modalPass = false;
+      this.password = "";
+      this.password2 = "";
+      (this.required = ""), (this.match = "");
     },
     getIds() {
       return true;
@@ -267,5 +270,11 @@ button {
   bottom: 0;
   background: rgba(255, 255, 255);
   width: 100%;
+}
+.color1 {
+  color: red;
+}
+.color2 {
+  color: violet;
 }
 </style>

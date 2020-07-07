@@ -53,7 +53,7 @@
             </div>
             <!-- SUBIR IMAGEN -->
             <div class="image">
-              <label for="image"></label>
+              <label for="imagechallenge">Sube una imagen:</label>
               <input
                 type="file"
                 id="file"
@@ -141,8 +141,7 @@ export default {
           photoFormData.append("user_id", this.user_id);
           photoFormData.append("time", this.time);
           //GUARDAR LA SOLUCION EN LOCALSTORAGE
-          localStorage.setItem("user_id", this.user_id);
-          if (this.file.length) {
+          if (this.file.name) {
             photoFormData.append("photo", this.file);
             console.log(this.file);
           }

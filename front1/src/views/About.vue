@@ -8,7 +8,7 @@
         <p>Buenas!!! Soy el creador de esta plataforma 🧟‍♂️.</p>
       </li>
       <li>
-        <p>Me siento muy halagado si no has llegado hasta aquí sin querer...🤔...</p>
+        <p>Me siento muy halagado si no has llegado hasta aquí de casualidad...🤔...</p>
       </li>
       <li>
         <p>...y si de verdad estas interesad@ en saber más acerca de mí 🥳.</p>
