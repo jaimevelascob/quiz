@@ -1,5 +1,5 @@
 <template>
-  <div class="capauno">
+  <div class="capauno" v-if="this.questionTime && this.questionTime[0]">
     <!-- MENU -->
     <div v-show="pulsarboton">
       <Menu></Menu>

@@ -73,9 +73,7 @@ export default {
       // path: "http://localhost:3000/uploads/",
       // defaultAvatar: "http://localhost:3000/uploads/default.png",
       modal: "",
-      nomodal: "",
-      user_id: "",
-      p: 0
+      nomodal: ""
     };
   },
   props: {
@@ -85,7 +83,11 @@ export default {
     // MIRAR SI EL ID ES EL MISMO QUE EL USER_ID
     // ESCONDER BOTON AÑADIR PREGUNTAS
     getUserName() {
-      if (localStorage.getItem("id")) {
+      if (
+        this.challenges &&
+        this.challenges[0] &&
+        localStorage.getItem("id") === this.challenges[0].user_id
+      ) {
         this.modal = true;
       } else {
         this.modal = false;
