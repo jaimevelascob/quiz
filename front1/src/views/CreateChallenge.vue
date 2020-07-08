@@ -10,9 +10,6 @@
       <div class="primero">
         <div class="capa">
           <div class="title">
-            <div v-show="modal">
-              <input type="text" id="times" v-model=" user_id = this.userID" />
-            </div>
             <div class="titlep">
               <input
                 class="input"
@@ -53,7 +50,7 @@
             </div>
             <!-- SUBIR IMAGEN -->
             <div class="image">
-              <label for="imagechallenge">Sube una imagen:</label>
+              <label for="imagechallenge"></label>
               <input
                 type="file"
                 id="file"
@@ -104,15 +101,6 @@ export default {
     };
   },
   methods: {
-    getUserName() {
-      if (localStorage.getItem("id")) {
-        this.userID = localStorage.getItem("id");
-        this.modal = false;
-      } else {
-        this.userID = 0;
-        this.modal = true;
-      }
-    },
     //COMPROBAR QUE LOS DATOS NO ESTÁN VACIOS
     validatingData() {
       if (this.title === "" || this.difficulty === "") {
@@ -131,6 +119,7 @@ export default {
     //AÑADIR NUEVO USUARIO A LA BBDD
     async uploadEvent() {
       console.log(this.file);
+      const user_id = localStorage.getItem("id");
       this.validatingData();
       if (this.correctData) {
         try {
@@ -138,7 +127,7 @@ export default {
           // dict of all elements
           photoFormData.append("title", this.title);
           photoFormData.append("difficulty", this.difficulty);
-          photoFormData.append("user_id", this.user_id);
+          photoFormData.append("user_id", user_id);
           photoFormData.append("time", this.time);
           //GUARDAR LA SOLUCION EN LOCALSTORAGE
           if (this.file.name) {
@@ -154,6 +143,7 @@ export default {
           this.$router.push("/challenges");
         } catch (error) {
           alert(error.response.data.message);
+          location.reload();
         }
       }
       return;
@@ -173,9 +163,6 @@ export default {
       //MENSAJE SWAL
       this.$router.push("/challenges");
     }
-  },
-  created() {
-    this.getUserName();
   }
 };
 </script>
@@ -271,6 +258,7 @@ select:focus {
   align-items: center;
   justify-content: center;
 }
+
 button {
   position: absolute;
   margin-top: 25px;

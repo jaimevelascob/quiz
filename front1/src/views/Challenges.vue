@@ -69,9 +69,7 @@ export default {
     getChallenge() {
       let self = this;
       axios
-        .get(
-          `http://localhost:3000/challengelist?search=${self.search}&filter=${self.filter}`
-        )
+        .get(`http://localhost:3000/challengelist?search=${self.search}`)
         .then(function(response) {
           self.challenges = response.data.data;
         })

@@ -75,8 +75,7 @@ p {
   font-size: 25px;
   color: white;
 }
-.rol {
-}
+
 /* Gallery */
 #aw-gallery {
   display: flex;

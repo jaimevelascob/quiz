@@ -12,81 +12,9 @@ const {
   deletePhoto,
 } = require("../helpers/helpers");
 
-// POST VOTES challenge id --  👍🏻
-async function voteChallenge(req, res, next) {
-  try {
-    const { id } = req.params;
-
-    // Validate payload
-    await voteSchema.validateAsync(req.body);
-
-    const { vote } = req.body;
-
-    const connection = await getConnection();
-    // Check if the entry actually exists
-    const [
-      entry,
-    ] = await connection.query("SELECT id from challenge where id=?", [id]);
-
-    if (!entry.length) {
-      const error = new Error("La entrada con la id específicada no existe");
-      error.httpCode = 404;
-      throw error;
-    }
-    // Check if the user with the current ID already voted for this entry
-    const [
-      existingVote,
-    ] = await connection.query(
-      "SELECT id from challenge_votes where challenge_id=? AND user_id=?",
-      [id, req.auth.id]
-    );
-
-    if (existingVote.length) {
-      const error = new Error("Ya se votó a esta entrada tu usuario");
-      error.httpCode = 403;
-      throw error;
-    }
-    //Vote
-    await connection.query(
-      "INSERT INTO challenge_votes(challenge_id, vote, date, user_id) VALUES (?,?,?,?)",
-      [id, vote, formatDateToDB(new Date()), req.auth.id]
-    );
-    connection.release();
-    res.send({
-      status: "ok",
-      message: `The vote (${vote} points) to the entry with id ${id} was successful`,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
-// GET VOTES Challenge id.  👀👍🏻
-async function getChallengeVotes(req, res, next) {
-  try {
-    const { id } = req.params;
-    const connection = await getConnection();
-
-    const [
-      votes,
-    ] = await connection.query(
-      "SELECT * from challenge_votes WHERE challenge_id=?",
-      [id]
-    );
-    connection.release();
-    res.send({
-      status: "ok",
-      data: votes,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
 // Post challenge questions 🚀
 async function challengeQuestions(req, res, next) {
   try {
-    console.log("hola");
     const { id } = req.params;
     const {
       title,
@@ -99,7 +27,7 @@ async function challengeQuestions(req, res, next) {
       user_id,
       challenge_id,
     } = req.body;
-    console.log("quetal");
+
     // Validate payload
     await questionSchema.validateAsync(req.body);
 
@@ -122,7 +50,6 @@ async function challengeQuestions(req, res, next) {
       throw error;
     }
 
-    console.log(text);
     const date = formatDateToDB(new Date());
     await connection.query(
       "INSERT INTO challenge_questions(id, user_id, challenge_id, title, text, answerA, answerB, answerC, answerD, solution, date) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
@@ -162,7 +89,6 @@ async function challengeQuestions(req, res, next) {
 // create challenge
 async function createChallenge(req, res, next) {
   try {
-    console.log("ey");
     const { id } = req.params;
     const { title, difficulty, user_id, time } = req.body;
     await challengeSchema.validateAsync(req.body);
@@ -233,10 +159,12 @@ async function listChallengeQuestions(req, res, next) {
       );
     } else {
       result = await connection.query(
-        `SELECT * FROM challenge WHERE hidden=false AND date>CURDATE()
+        `SELECT * FROM challenge 
+        WHERE hidden=false AND date>CURDATE()
         ORDER BY date ASC`
       );
     }
+    connection.release();
     const [questions] = result;
     res.send({
       status: "ok",
@@ -295,53 +223,6 @@ async function challengeQuestion(req, res, next) {
     res.send({
       status: "ok",
       data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-// PUT challenge questions 🤯
-async function editChallengeQuestions(req, res, next) {
-  try {
-    const { id } = req.params;
-    const {
-      text,
-      answerA,
-      answerB,
-      answerC,
-      answerD,
-      solution,
-      limits,
-    } = req.body;
-
-    const connection = await getConnection();
-
-    const [
-      current,
-    ] = await connection.query(
-      "SELECT challenge_questions_id FROM challenge_answers WHERE id=?",
-      [id]
-    );
-
-    if (!current.length) {
-      const error = new Error(`The entry with id ${id} does not exist`);
-      error.httpCode = 404;
-      throw error;
-    }
-    // Check if the authenticated user is the entry author or admin
-    if (current[0].user_id !== req.auth.id && req.auth.role !== "admin") {
-      const error = new Error("No tienes permisos para editar esta entrada");
-      error.httpCode = 401;
-      throw error;
-    }
-    await connection.query(
-      "UPDATE challenge_questions SET text=?,answerA=?,answerB=?,answerC=?,answerD=?,solution=?,limits=? WHERE challenge_id=?",
-      [text, answerA, answerB, answerC, answerD, solution, limits, id]
-    );
-    connection.release();
-    res.send({
-      status: "ok",
-      data: text,
     });
   } catch (error) {
     next(error);
@@ -500,11 +381,8 @@ async function listChallengeQuestionsID(req, res, next) {
   }
 }
 module.exports = {
-  getChallengeVotes,
-  voteChallenge,
   challengeQuestions,
   listChallengeQuestions,
-  editChallengeQuestions,
   challengeAnswers,
   listChallengeAnswers,
   createNewUserAnswers,

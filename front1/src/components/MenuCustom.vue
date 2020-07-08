@@ -85,7 +85,6 @@ export default {
   background: rgba(0, 0, 0, 0.8);
   color: rgb(248, 229, 229);
   height: 80px;
-
   width: 100%;
   left: 0;
   top: 0;

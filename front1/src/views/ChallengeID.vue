@@ -81,7 +81,7 @@
       <!-- /BOTTON NEXT -->
       <!-- BOTTON POSTEAR -->
       <div>
-        <button class="rer" v-show="finish" @click="postAnswers()">Terminar</button>
+        <button class="rero" v-show="finish" @click="postAnswers()">Terminar</button>
       </div>
       <!-- /BOTTON POSTEAR -->
       <div class="footer">
@@ -128,7 +128,8 @@ export default {
       finish: false,
       pausaDis: 1,
       estado: "Ultimate disponible",
-      ulti: false
+      ulti: false,
+      bar: ""
     };
   },
   methods: {
@@ -213,17 +214,19 @@ export default {
       } else {
         this.next = true;
         this.q--;
+        this.finish = false;
+        this.answer = "";
       }
     },
     // vaciar
     emptyFields() {
-      this.q = 0;
+      this.questionTime[0].time = 70;
       Swal.fire({
         icon: "success",
         title: "has logrado acabar el reto justo a tiempo!! 🏆",
         text: "Felicidades!!!"
       });
-      this.$router.push("/");
+      this.$router.push("/challenges");
     },
     settime() {
       if (
@@ -242,22 +245,31 @@ export default {
         this.crono();
       }
     },
-
-    crono() {
+    iniciarCrono(bar) {
+      if (this.questionTime[0].time == 70) {
+        clearInterval(this.bar);
+      } else {
+        bar = setTimeout(this.crono, 1000);
+        return this.bar;
+      }
+    },
+    crono(bar) {
+      this.iniciarCrono();
       // SI LLEGA A 0
       if (this.questionTime[0].time == 0) {
+        clearInterval(bar);
         Swal.fire({
           icon: "error",
-          title: "U LOSE MAY FRIEND",
-          text: "OTRA VEZ SERA 😈"
+          title: "Qué pena!!! Por qué poco!!",
+          text: "Otra ver será...<3"
         });
         location.reload();
         // SI ES MAYOR QUE 0
       } else {
         this.questionTime[0].time = this.questionTime[0].time - 1;
-        setTimeout(this.crono, 1000);
       }
     },
+
     // difficultad time
 
     bottonFijar() {
@@ -491,7 +503,7 @@ export default {
   text-align: center;
   align-items: center;
 }
-button {
+.buttoncito {
   width: initial;
   cursor: pointer;
   display: inline-block;
@@ -550,6 +562,35 @@ button {
   padding: 0.6rem;
   color: rgba(0, 0, 0, 0.75);
 }
+.rero {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: rgba(95, 0, 0, 0.75) 0px -4px inset;
+  color: rgb(219, 11, 11);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 42px;
+  min-height: 42px;
+  position: relative;
+  line-height: 0.875rem;
+
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  text-decoration: none;
+  padding: 0px 16px 4px;
+}
+.rero:hover {
+  width: initial;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.6rem;
+  color: rgba(0, 0, 0, 0.75);
+}
 #a {
   width: 20px;
   height: 20px;
@@ -557,8 +598,8 @@ button {
 #a:checked {
   -webkit-animation: pulsate 3s ease-in-out;
   -webkit-animation-iteration-count: infinite;
-  box-shadow: 4px 7px 20px #000200;
-  opacity: 0.7;
+  box-shadow: 4px 7px 20px #ffffff;
+  opacity: 0.6;
   width: 3%;
 }
 @-webkit-keyframes pulsate {

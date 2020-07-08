@@ -69,17 +69,6 @@ async function main() {
         CONSTRAINT FK_question_challenge FOREIGN KEY (challenge_id) REFERENCES challenge(id) ON DELETE SET NULL
         );`);
     console.log("prueba1");
-    //challenge votes  👍🏻
-    // await connection.query(`CREATE TABLE IF NOT EXISTS challenge_votes (
-    //   id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    //   challenge_questions_id INTEGER,
-    //   user_id INTEGER,
-    //   vote INTEGER NOT NULL,
-    //   date DATETIME NOT NULL,
-    //   CONSTRAINT fk_votes_challenge FOREIGN KEY (challenge_questions_id) REFERENCES challenge_questions(id) ON DELETE SET NULL,
-    //   CONSTRAINT fk_votes_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
-    //   );`);
-    // console.log("prueba2");
 
     console.log("prueba3");
     // challenge_answers ❗️

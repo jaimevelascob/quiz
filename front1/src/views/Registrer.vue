@@ -1,27 +1,43 @@
 <template>
-  <div class="register">
-    <div class="registerBox">
-      <Menu></Menu>
-      <h2>Registrate</h2>
-      <p class="color1" v-show="required">Tienes datos sin completar</p>
-      <p class="color2" v-show="match">Las contraseñas no coinciden</p>
-      <input type="email" name="email" v-model="email" placeholder="Email..." />
-      <br />
-      <input type="nickName" name="nickName" v-model="nickName" placeholder="nickName..." />
-      <br />
-      <input type="password" name="password" v-model="password" placeholder="Password..." />
-      <br />
-      <input
-        type="password"
-        name="password"
-        v-model="repeatpassword"
-        placeholder="Repeat password..."
-      />
-      <br />
-      <div>
-        <button @click="addUser(email, password, nickName)">Registro</button>
-        <router-link :to="{ name: 'Login' }">Login</router-link>
+  <div>
+    <div class="login">
+      <div class="lug">
+        <!-- MENU -->
+        <div>
+          <Menu></Menu>
+        </div>
+
+        <div class="loge">
+          <h2>Registrate</h2>
+          <!-- NOMBRE DE LA PAGINA -->
+          <!-- <vue-headful title="Loging" description="Logging page" /> -->
+          <!-- /NOMBRE DE LA PAGINA -->
+          <div class="log">
+            <p class="color1" v-show="required">Tienes datos sin completar</p>
+            <p class="color2" v-show="match">Las contraseñas no coinciden</p>
+            <input type="email" name="email" v-model="email" placeholder="Email..." />
+            <br />
+            <input type="nickName" name="nickName" v-model="nickName" placeholder="nickName..." />
+            <br />
+            <input type="password" name="password" v-model="password" placeholder="Password..." />
+            <br />
+            <input
+              type="password"
+              name="password"
+              v-model="repeatpassword"
+              placeholder="Repeat password..."
+            />
+            <br />
+            <div class="botones">
+              <button @click="addUser(email, password, nickName)">Registro</button>
+              <router-link :to="{ name: 'Login' }">Login</router-link>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div>
+      <FooterDos></FooterDos>
     </div>
   </div>
 </template>
@@ -33,9 +49,10 @@ import Swal from "sweetalert2";
 
 // IMPORTANDO MENU
 import Menu from "@/components/MenuCustom.vue";
+import FooterDos from "@/components/FooterDos.vue";
 export default {
   name: "Registrer",
-  components: { Menu },
+  components: { Menu, FooterDos },
   data() {
     return {
       email: "",
@@ -106,37 +123,42 @@ export default {
 </script>
 
 <style scoped>
-.register {
-  padding: 1rem;
-  height: 80vh;
+.login {
+  margin: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(../assets/astronauta.jpg);
 }
-.registerBox {
+.loge {
+  border-radius: 10%;
+  display: flex;
+  padding: 10rem;
+  align-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.0333);
+}
+.lug {
+  background-image: url(../assets/astronauta.jpg);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.log {
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
+  grid-area: box;
   margin: 0 auto;
 }
-img {
-  height: 500px;
-  width: 500px;
-  border-radius: 20px;
+.title {
+  grid-area: head;
 }
-input {
-  width: 80%;
-  align-self: center;
-  margin: 0.5rem;
-  border: 2px solid white;
-  border-radius: 20px;
-}
-input:focus {
-  outline: none;
+h2:first-letter {
+  color: #5100ba;
+  font-size: 3rem;
 }
 button {
-  width: 80px;
+  width: 100px;
   cursor: pointer;
   text-align: center;
   color: white;
@@ -148,7 +170,7 @@ button {
   font-weight: bold;
 }
 button:hover {
-  background-color: #008cba;
+  background-color: #5100ba;
   color: white;
   border: 2px solid gray;
 }
@@ -156,17 +178,37 @@ button:focus {
   outline: none;
 }
 a {
-  color: #42b983;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  color: white;
   text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
-.color1 {
-  color: #ff0000;
+a:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.6);
 }
-.color2 {
-  color: rebeccapurple;
+input {
+  width: 100%;
+  text-align: center;
+  align-self: center;
+  margin: 1rem;
+  font-size: 1rem;
+  border: 1px solid rgb(185, 180, 180);
 }
 h2 {
   padding-bottom: 1rem;
   font-size: 2rem;
+  letter-spacing: 3px;
+  color: #d6cdb6;
+}
+.color1 {
+  color: #ffffff;
+}
+.color2 {
+  font-size: 15px;
+  color: rgb(255, 255, 255);
 }
 </style>

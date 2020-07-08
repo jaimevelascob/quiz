@@ -10,8 +10,8 @@
       <h2>1. Crear Reto</h2>
       <p>Añadir título, dificultad y tiempo (imagen opcional)</p>
       <h2>2. Ir a lista de retos y añadir preguntas</h2>
-      <h2>3. Una vez terminado de crear las preguntas, pulsar el de jugar y aceptar el reto</h2>
-      <h2>4. Acabar el reto antes de que termine el tiempo</h2>
+      <h2>3. Una vez terminado de crear las preguntas, pulsar el enlace de jugar y aceptar el reto</h2>
+      <h2>4. Una vez ya dentro, aparecerá un cronometro con el tiempo establecido. Deberás acabar el reto antes de que termine</h2>
       <p>Si aciertas la pregunta pasas a la siguiente,</p>
       <p>pero si fallas, vuelves a la anterior.</p>
       <h3>El juego está pensado para que añadas tú la dificultad que creas conveniente</h3>

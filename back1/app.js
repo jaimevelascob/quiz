@@ -13,8 +13,6 @@ const port = process.env.PORT;
 
 // exportar routes challenges 🚀
 const {
-  getChallengeVotes,
-  voteChallenge,
   challengeQuestions,
   listChallengeQuestions,
   challengeAnswers,
@@ -71,9 +69,6 @@ app.get("/users/validate", validateUser); // 👀
 app.get("/users", getUser); // 👀
 app.get("/users/:id", getUserLog);
 app.delete("/users/:id", deleteUser);
-//  c.h.a.l.l.e.n.g.e id votes
-app.post("/challenge/:id/votes", userIsAuthenticated, voteChallenge); // 🏁 Solo usuarios ✅
-app.get("/challenge/:id/votes", getChallengeVotes); // 👀 ✅
 
 //  c.h.a.l.l.e.n.g.e id questions 🧠 ✅
 app.post("/challenge", createChallenge); // 🏁✅

@@ -211,6 +211,7 @@ export default {
           this.$router.push("/challenges");
         } catch (error) {
           alert(error.response.data.message);
+          location.reload();
         }
       }
       return;
@@ -260,13 +261,11 @@ export default {
         .then(function(response) {
           Swal.fire({
             icon: "success",
-            title: "Coworking eliminado",
-            text: "Este coworking ya no existe",
+            title: "challenge eliminado",
+            text: "Este challenge ha sido eliminado existe",
             confirmButtonText: "Ok"
           });
-          setTimeout(function() {
-            location.reload();
-          }, 1500);
+          this.$router.push("/challenges");
         })
         .catch(function(error) {
           if (error.response) {
@@ -291,6 +290,7 @@ export default {
             "El challenge fue eliminado con éxito",
             "success"
           );
+          this.$router.push("/challenges");
         }
       });
     }
@@ -322,8 +322,7 @@ export default {
   flex-direction: column;
 }
 /* pregunta */
-.pregunta {
-}
+
 .pregunta h1 {
   font-size: 50px;
   letter-spacing: 2.5px;
@@ -453,24 +452,11 @@ export default {
   padding: 0px 16px 4px;
 }
 .color1 {
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(150, 46, 5);
+  color: rgb(22, 65, 160);
   letter-spacing: 3px;
-  -webkit-animation: pulsate 3s ease-in-out;
-  -webkit-animation-iteration-count: infinite;
-  opacity: 0.3;
-}
-@-webkit-keyframes pulsate {
-  0% {
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 0.9;
-  }
 }
 </style>

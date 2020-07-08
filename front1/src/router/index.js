@@ -57,6 +57,11 @@ const routes = [
     },
   },
   {
+    path: "*",
+    name: "Error",
+    component: () => import("../views/Error.vue"),
+  },
+  {
     path: "/challengeQuestions/:id",
     name: "ChallengeQuestions",
     component: () => import("../views/ChallengeQuestions.vue"),

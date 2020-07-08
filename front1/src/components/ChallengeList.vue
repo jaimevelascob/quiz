@@ -7,14 +7,11 @@
             <ul class="mood">
               <div class="meeting" v-for="challenge in challenges" :key="challenge.id">
                 <nav class="pac">
-                  <li class="imag">
-                    <!-- <img class="log" src="../assets/Logo.jpeg" alt /> -->
-                    <img
-                      class="log"
-                      :src="challenge.image ? path + challenge.image : defaultAvatar"
-                      alt
-                    />
-                  </li>
+                  <ul id="aw-gallery">
+                    <li class="imag">
+                      <img class="log" src="../assets/mingo.jpg" alt />
+                    </li>
+                  </ul>
                 </nav>
                 <nav class="pro">
                   <li class="lipri">
@@ -73,10 +70,12 @@ export default {
   name: "ChallengeList",
   data() {
     return {
-      path: "http://localhost:3000/uploads/",
-      defaultAvatar: "http://localhost:3000/uploads/default.png",
+      // path: "http://localhost:3000/uploads/",
+      // defaultAvatar: "http://localhost:3000/uploads/default.png",
       modal: "",
-      nomodal: ""
+      nomodal: "",
+      user_id: "",
+      p: 0
     };
   },
   props: {
@@ -85,24 +84,24 @@ export default {
   methods: {
     // MIRAR SI EL ID ES EL MISMO QUE EL USER_ID
     // ESCONDER BOTON AÑADIR PREGUNTAS
-    // getUserName() {
-    //   if (localStorage.getItem("id") == this.challenges[0].user_id) {
-    //     this.modal = true;
-    //   } else {
-    //     this.modal = false;
-    //   }
-    // },
-    //pillar foto
-    getPhoto(id, image) {
-      if (image) {
-        return this.path + image;
+    getUserName() {
+      if (localStorage.getItem("id")) {
+        this.modal = true;
+      } else {
+        this.modal = false;
       }
-      let lastNumber = id
-        .toString()
-        .split("")
-        .pop();
-      return `http://localhost:3000/uploads/${lastNumber}.jpg`;
     },
+    //pillar foto
+    // getPhoto(id, image) {
+    //   if (image) {
+    //     return this.path + image;
+    //   }
+    //   let lastNumber = id
+    //     .toString()
+    //     .split("")
+    //     .pop();
+    //   return `http://localhost:3000/uploads/${lastNumber}.jpg`;
+    // },
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR
     UserLog() {
@@ -133,7 +132,7 @@ export default {
   },
   created() {
     this.UserLog();
-    // this.getUserName();
+    this.getUserName();
   }
 };
 </script>
@@ -199,6 +198,7 @@ export default {
   list-style-type: none;
 }
 .imag {
+  border-radius: 100%;
   position: absolute;
   top: 12.125vw;
   width: 2045px;
@@ -206,6 +206,7 @@ export default {
   flex-wrap: wrap;
 }
 .log {
+  border-radius: 50%;
   width: 600px;
   height: 480px;
   box-shadow: 1px 1px 8px #272c28;
@@ -359,5 +360,16 @@ li.imag {
 }
 .awuserdata {
   display: block;
+}
+/* Gallery */
+
+#aw-gallery li img {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#aw-gallery li:hover img {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
 }
 </style>

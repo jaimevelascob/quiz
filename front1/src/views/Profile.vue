@@ -82,6 +82,7 @@ export default {
       password: "",
       password2: "",
       profile: {},
+      answers: {},
       modalEdit: false,
       modalPass: false,
       email: "",
@@ -215,6 +216,23 @@ export default {
           //TIEMPO DE CARGA
 
           self.profile = response.data.data;
+        })
+        .catch(function(error) {
+          if (error.response) {
+            alert(error.response.data.message);
+            /*   self.$router.push({ path: "/error" }); */
+          }
+        });
+    },
+    // get respuestas
+    getAnswers() {
+      let self = this;
+      axios
+        .get("http://localhost:3000/answers/" + self.$route.params.id)
+        .then(function(response) {
+          //TIEMPO DE CARGA
+
+          self.answers = response.data.data;
         })
         .catch(function(error) {
           if (error.response) {

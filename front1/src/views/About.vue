@@ -16,7 +16,7 @@
 
       <br />
       <li>
-        <p>Para ello te dejo abajo un par de enlaces y asi puedrás conocerme (un poco mejor)</p>
+        <p>Para ello te dejo un par de enlaces y asi podrás conocerme (un poco mejor)</p>
       </li>
     </div>
     <nav class="preenlaces">
@@ -50,12 +50,10 @@
 import Menu from "@/components/MenuCustom.vue";
 export default {
   name: "about",
-  components: { Menu }
+  components: { Menu, FooterDos }
 };
 </script>
 <style scoped>
-* {
-}
 /* perfil */
 .pro {
   padding: 2rem;
@@ -77,6 +75,9 @@ export default {
   height: 171px;
   width: 750px;
   box-shadow: 1px 1px 15px #333333;
+}
+:first-letter {
+  color: rgb(50, 97, 81);
 }
 .pro li p {
   margin: 2rem;
