@@ -145,13 +145,15 @@ export default {
   align-content: flex-end;
   align-items: center;
   padding: 9rem;
+  margin-bottom: 2.5rem;
 }
 .segundaimagen {
-  padding: 0.5rem;
   background-image: url(../assets/quest.jpg);
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  border: 0.5px solid black;
 }
 .nose {
   background: chartreuse;
@@ -168,8 +170,7 @@ export default {
   background: rgba(119, 119, 118, 0.3);
 }
 .utl {
-  padding: 0.5rem;
-  box-shadow: 4px 3px 50px #534e47;
+  box-shadow: 4px 3px 50px #000000;
 }
 .ulti {
   background: rgb(0, 0, 0, 0.2);
@@ -233,15 +234,14 @@ li.imag {
   height: 480px;
 }
 .botones {
+  color: white;
   position: absolute;
-  margin-top: 25px;
+  margin-top: 10px;
   width: initial;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
   vertical-align: bottom;
   box-shadow: rgba(20, 1, 1, 0.65) 0px -4px inset;
-  color: rgb(51, 51, 51);
-  font-size: 14px;
   font-weight: bold;
   text-align: center;
   min-width: 42px;
@@ -249,18 +249,19 @@ li.imag {
   position: relative;
   line-height: 0.875rem;
   word-wrap: break-word;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 40px;
   text-decoration: none;
-  padding: 0px 20px 4px;
+  justify-content: center;
   letter-spacing: 1px;
+  align-items: center;
 }
 .botones:hover {
+  color: white;
   width: initial;
   cursor: pointer;
-  display: inline-block;
-  padding: 0.3rem;
-  color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  background: rgba(0, 0, 0, 0.7);
   letter-spacing: normal;
 }
 .botoncitos {

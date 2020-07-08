@@ -63,11 +63,11 @@ async function newUser(req, res, next) {
         content: `Para validar tu cuenta de usuario pega esta url en tu navegador: ${validationURL}`,
       });
     } catch (error) {
-      console.error(error.response.body);
       throw new Error(
         "Error en el envío de mail. Inténtalo de nuevo más tarde."
       );
     }
+    console.log("8");
     await connection.query(
       `
       INSERT INTO users (registrationDate, lastPasswordUpdate, email, password, role, nickName, registrationCode)

@@ -94,6 +94,10 @@
           >{{estado}}</p>
         </div>
       </div>
+      <!-- Footer-->
+      <div>
+        <Footer></Footer>
+      </div>
     </div>
   </div>
 </template>

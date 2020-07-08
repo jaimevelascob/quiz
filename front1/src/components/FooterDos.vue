@@ -27,11 +27,10 @@ export default {
 
 <style scoped>
 .footer {
-  background: rgba(0, 0, 0, 0.8);
-
+  background: rgba(252, 252, 252, 0.2);
   color: white;
   text-align: center;
-  padding: 13px;
+  padding: 4px;
   margin-top: 3px;
 }
 
@@ -47,6 +46,7 @@ li {
   text-decoration: none;
 }
 li a {
+  font-size: 30px;
   color: white;
   text-decoration: none;
   letter-spacing: 10px;

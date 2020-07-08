@@ -26,9 +26,9 @@
               <!-- DIFICULTAD -->
               <h4>DIFICULTAD</h4>
               <select class="dif" v-model="difficulty" multiple>
-                <option value="fácil">fácil</option>
-                <option value="medio">medio</option>
-                <option value="difícil">difícil</option>
+                <option class="facil" value="fácil">fácil</option>
+                <option class="medio" value="medio">medio</option>
+                <option class="dificil" value="difícil">difícil</option>
               </select>
               <br />
             </div>
@@ -180,19 +180,19 @@ export default {
 }
 .pad {
   padding: 8.5rem;
-  background-image: url(../assets/rt.jpg);
+  background-image: url(../assets/unie.jpg);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .capa {
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 5%;
   box-shadow: 4px 3px 15px rgba(255, 255, 255, 0.9);
 }
 .primero {
   width: 50%;
-  background: rgb(238, 164, 130);
+  background: rgba(0, 0, 0, 0.1);
   box-shadow: 4px 3px 15px #7dc965;
 }
 .title {
@@ -209,10 +209,14 @@ export default {
   position: relative;
 }
 .tiempo h4 {
+  color: black;
   letter-spacing: 3px;
   height: 25px;
   overflow: hidden;
   position: relative;
+}
+h4 {
+  color: white;
 }
 .caja {
   margin: 20px auto 40px auto;
@@ -247,6 +251,15 @@ export default {
   padding: 5px;
   width: 300px;
   box-shadow: 1px 1px 2px #333333;
+}
+.facil:hover {
+  color: #519c3a;
+}
+.medio:hover {
+  color: #943a9c;
+}
+.dificil:hover {
+  color: #9c3a3a;
 }
 
 select:focus {
@@ -315,5 +328,8 @@ input[type="file"]::-webkit-file-upload-button {
 .color1 {
   color: rgb(0, 0, 0);
   letter-spacing: 0.5rem;
+}
+.tiempo::first-letter {
+  color: #996520;
 }
 </style>

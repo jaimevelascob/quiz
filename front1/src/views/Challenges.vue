@@ -129,7 +129,8 @@ select {
 }
 /* buscador */
 .searchProduct {
-  padding-top: 7rem;
+  padding-top: 5.5rem;
+  padding-bottom: 1rem;
   border: 1px solid #e5e5e5;
 }
 input {

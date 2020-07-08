@@ -305,15 +305,19 @@ export default {
 <style scoped>
 /* card */
 .pad {
-  padding: 10rem;
+  padding: 9.8rem;
   background-image: url(../assets/quest.jpg);
 }
 .capa {
   display: flex;
   flex-direction: row;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.1);
   justify-content: space-around;
 }
+.input {
+  background: rgba(0, 0, 0, 0.255);
+}
+
 .capados {
   background: rgb(255, 255, 255);
 }
@@ -331,37 +335,42 @@ export default {
   width: 100%;
   font-size: 30px;
   letter-spacing: 3.5px;
+  color: white;
 }
 .preguntaA {
   box-shadow: rgb(33, 196, 187) 0px -4px inset;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.255);
   margin-top: 3rem;
+  color: white;
 }
 .preguntaB {
   box-shadow: rgb(107, 184, 35) 0px -4px inset;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.255);
   margin-top: 3rem;
+  color: white;
 }
 .preguntaC {
   box-shadow: rgb(194, 170, 34) 0px -4px inset;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.255);
   margin-top: 3rem;
+  color: white;
 }
 .preguntaD {
+  color: white;
   box-shadow: rgb(243, 58, 33) 0px -4px inset;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.255);
   margin-top: 3rem;
 }
 .capa h2 {
@@ -385,14 +394,17 @@ export default {
   width: 100%;
   font-size: 20px;
   letter-spacing: 3.5px;
+  background: rgba(0, 0, 0, 0.255);
+  color: white;
 }
 .prego {
+  color: white;
   margin-top: 1rem;
 }
 .labela {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: rgb(33, 196, 187);
+  color: rgb(0, 255, 242);
   font-size: 40px;
 }
 .labelb {

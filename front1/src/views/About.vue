@@ -50,7 +50,7 @@
 import Menu from "@/components/MenuCustom.vue";
 export default {
   name: "about",
-  components: { Menu, FooterDos }
+  components: { Menu }
 };
 </script>
 <style scoped>
@@ -69,19 +69,21 @@ export default {
   margin-top: 50px;
   letter-spacing: 2.5px;
   text-align: center;
-  background: #edf1e0;
+  background: rgba(0, 0, 0, 0.255);
   border: 0.5px solid #615656;
   font-size: 14px;
   height: 171px;
   width: 750px;
-  box-shadow: 1px 1px 15px #333333;
+  box-shadow: 1px 1px 6px #faf6f6;
 }
 :first-letter {
-  color: rgb(50, 97, 81);
+  font-size: 40px;
+  color: rgb(217, 255, 0);
 }
 .pro li p {
   margin: 2rem;
   font-size: 30px;
+  color: white;
 }
 .enlaces {
   background-image: url(../assets/quest.jpg);

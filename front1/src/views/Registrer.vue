@@ -8,7 +8,9 @@
         </div>
 
         <div class="loge">
-          <h2>Registrate</h2>
+          <div class="reg">
+            <h2>Registrate</h2>
+          </div>
           <!-- NOMBRE DE LA PAGINA -->
           <!-- <vue-headful title="Loging" description="Logging page" /> -->
           <!-- /NOMBRE DE LA PAGINA -->
@@ -128,7 +130,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../assets/astronauta.jpg);
+  background-image: url(../assets/astronautados.jpg);
 }
 .loge {
   border-radius: 10%;
@@ -137,10 +139,15 @@ export default {
   align-content: center;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.0333);
+  margin-bottom: 0.5rem;
 }
 .lug {
   background-image: url(../assets/astronauta.jpg);
   border: 1px solid rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.077);
+}
+.reg {
+  background: rgba(0, 0, 0, 0.077);
 }
 .log {
   display: flex;
@@ -162,7 +169,7 @@ button {
   cursor: pointer;
   text-align: center;
   color: white;
-  background: #3faf28;
+  background-color: #5100ba;
   border: 2px solid #d6cdb6;
   border-radius: 20px;
   padding: 0.5rem;
@@ -170,9 +177,9 @@ button {
   font-weight: bold;
 }
 button:hover {
-  background-color: #5100ba;
+  background: #3faf28;
   color: white;
-  border: 2px solid gray;
+  border: 2px solid #d6cdb6;
 }
 button:focus {
   outline: none;
