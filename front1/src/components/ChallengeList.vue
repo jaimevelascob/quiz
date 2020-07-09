@@ -10,6 +10,11 @@
                   <ul id="aw-gallery">
                     <li class="imag">
                       <img class="log" src="../assets/mingo.jpg" alt />
+                      <!-- <img
+                        class="log"
+                        :src="challenge.image ? path + challenge.image : defaultAvatar"
+                        alt
+                      />-->
                     </li>
                   </ul>
                 </nav>
@@ -70,8 +75,8 @@ export default {
   name: "ChallengeList",
   data() {
     return {
-      // path: "http://localhost:3000/uploads/",
-      // defaultAvatar: "http://localhost:3000/uploads/default.png",
+      path: "http://localhost:3000/uploads/",
+      defaultAvatar: "http://localhost:3000/uploads/default.png",
       modal: "",
       nomodal: ""
     };
@@ -83,27 +88,12 @@ export default {
     // MIRAR SI EL ID ES EL MISMO QUE EL USER_ID
     // ESCONDER BOTON AÑADIR PREGUNTAS
     getUserName() {
-      if (
-        this.challenges &&
-        this.challenges[0] &&
-        localStorage.getItem("id") === this.challenges[0].user_id
-      ) {
+      if (localStorage.getItem("id")) {
         this.modal = true;
       } else {
         this.modal = false;
       }
     },
-    //pillar foto
-    // getPhoto(id, image) {
-    //   if (image) {
-    //     return this.path + image;
-    //   }
-    //   let lastNumber = id
-    //     .toString()
-    //     .split("")
-    //     .pop();
-    //   return `http://localhost:3000/uploads/${lastNumber}.jpg`;
-    // },
     // MIRAR SI EL USER ESTA LOG
     // ESCONDER JUGAR
     UserLog() {

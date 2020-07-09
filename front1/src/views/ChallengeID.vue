@@ -10,7 +10,9 @@
     <div class="aceptar" v-show="pulsarboton">
       <div class="rep">
         <h1 class="dedo">👇</h1>
-        <button class="inicioButton" @click="settime()" value="inicio">INCIAR</button>
+        <button class="inicioButton" @click="settime()" value="inicio">
+          INCIAR
+        </button>
         <h1 class="dedo">🖕</h1>
       </div>
       <!-- Footer-->
@@ -49,11 +51,23 @@
         <div class="primerapregunta">
           <li class="liprimera">
             <p>{{ challenges[q].answerA }}</p>
-            <input type="radio" id="a" value="A" v-model="answer" @click="bottonFijar()" />
+            <input
+              type="radio"
+              id="a"
+              value="A"
+              v-model="answer"
+              @click="bottonFijar()"
+            />
           </li>
           <li class="lisegunda">
             <p>{{ challenges[q].answerB }}</p>
-            <input type="radio" id="a" value="B" v-model="answer" @click="bottonFijar()" />
+            <input
+              type="radio"
+              id="a"
+              value="B"
+              v-model="answer"
+              @click="bottonFijar()"
+            />
           </li>
         </div>
 
@@ -62,11 +76,23 @@
             <div class="respuestas">
               <li class="litercera">
                 <p>{{ challenges[q].answerC }}</p>
-                <input @click="pulse()" type="radio" id="a" value="C" v-model="answer" />
+                <input
+                  @click="pulse()"
+                  type="radio"
+                  id="a"
+                  value="D"
+                  v-model="answer"
+                />
               </li>
               <li class="licuarta">
                 <p>{{ challenges[q].answerD }}</p>
-                <input @click="pulse()" type="radio" id="a" value="D" v-model="answer" />
+                <input
+                  @click="pulse()"
+                  type="radio"
+                  id="a"
+                  value="C"
+                  v-model="answer"
+                />
               </li>
             </div>
           </div>
@@ -76,12 +102,16 @@
 
       <!-- BOTTON NEXT -->
       <div>
-        <button class="rer" v-show="next" @click="nextAnswers()">Siguiente</button>
+        <button class="rer" v-show="next" @click="nextAnswers()">
+          Siguiente
+        </button>
       </div>
       <!-- /BOTTON NEXT -->
       <!-- BOTTON POSTEAR -->
       <div>
-        <button class="rero" v-show="finish" @click="postAnswers()">Terminar</button>
+        <button class="rero" v-show="finish" @click="postAnswers()">
+          Terminar
+        </button>
       </div>
       <!-- /BOTTON POSTEAR -->
       <div class="footer">
@@ -90,8 +120,13 @@
           <button class="buttoncito" @click="pausa()">Pausar</button>
           <h1 class="ult" v-show="ultimapregunta">Ultima Pregunta</h1>
           <p
-            :class="{ green: estado=== 'Ultimate disponible', red: estado=== 'Ultimate no disponible'}"
-          >{{estado}}</p>
+            :class="{
+              green: estado === 'Ultimate disponible',
+              red: estado === 'Ultimate no disponible',
+            }"
+          >
+            {{ estado }}
+          </p>
         </div>
       </div>
       <!-- Footer-->
@@ -133,7 +168,7 @@ export default {
       pausaDis: 1,
       estado: "Ultimate disponible",
       ulti: false,
-      bar: ""
+      bar: "",
     };
   },
   methods: {
@@ -202,7 +237,7 @@ export default {
         axios
           .post("http://localhost:3000/challenge/answers", {
             answer: self.q,
-            challenge_id: this.questionTime[0].id
+            challenge_id: this.questionTime[0].id,
           })
           .then(function(response) {
             console.log(response);
@@ -228,7 +263,7 @@ export default {
       Swal.fire({
         icon: "success",
         title: "has logrado acabar el reto justo a tiempo!! 🏆",
-        text: "Felicidades!!!"
+        text: "Felicidades!!!",
       });
       this.$router.push("/challenges");
     },
@@ -265,7 +300,7 @@ export default {
         Swal.fire({
           icon: "error",
           title: "Qué pena!!! Por qué poco!!",
-          text: "Otra ver será...<3"
+          text: "Otra ver será...<3",
         });
         location.reload();
         // SI ES MAYOR QUE 0
@@ -324,14 +359,14 @@ export default {
       } else {
         this.pausaDis = 0;
       }
-    }
+    },
   },
 
   created() {
     this.getAnswers();
     this.getUserName();
     this.getAnswerTime();
-  }
+  },
 };
 </script>
 
